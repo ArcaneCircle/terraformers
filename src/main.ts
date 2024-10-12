@@ -1,3 +1,4 @@
+import "webxdc-scores"
 import { loadAssets } from "./asset"
 import { CompPhysicsRun } from "./components/physics"
 import { CompRenderRun } from "./components/render"
@@ -18,6 +19,7 @@ const processInput = initInput(canvas, WIDTH, HEIGHT)
 const postProcess = setupPostProcess(canvas, WIDTH * 4, HEIGHT * 4)
 loadSounds()
 ;(async () => {
+    await window.highscores.init()
     const assets = await loadAssets()
     // display note if device is in portrait
     if (innerWidth < innerHeight) {

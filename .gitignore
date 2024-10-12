@@ -1,4 +1,8 @@
+# Logs
+pnpm-debug.log*
+.pnpm-debug.log
+
 node_modules
-app
-inline
-zip
+dist
+dist-xdc
+*~

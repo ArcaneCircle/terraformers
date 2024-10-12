@@ -1,24 +1,20 @@
 {
-  "name": "xiicur-surviivors",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "saud <mdsaud@pm.me>",
-  "type": "module",
-  "license": "GPLv3",
-  "scripts": {
-    "inline": "node scripts/inline.js",
-    "build": "node scripts/build.js",
-    "dev": "node scripts/dev.js",
-    "uglify": "uglifyjs --compress --mangle -o app/main.js -- app/main.js",
-    "roll": "roadroller app/main.js -o app/main.js",
-    "bundle": "./bundle.sh",
-    "all": "npm run build && npm run roll && npm run inline && npm run bundle"
-  },
-  "devDependencies": {
-    "@craftamap/esbuild-plugin-html": "^0.7.0",
-    "esbuild": "^0.23.0",
-    "prettier": "3.3.3",
-    "roadroller": "^2.1.0",
-    "uglify-js": "^3.19.0"
-  }
+    "private": true,
+    "scripts": {
+        "start": "vite --port 3000",
+        "emulator": "concurrently \"npm start\" \"webxdc-dev run http://localhost:3000\"",
+        "fix": "prettier --write .",
+        "check": "prettier --check .",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "concurrently": "^9.0.1",
+        "prettier": "^3.3.3",
+        "vite": "^4.5.5",
+        "webxdc-dev": "^0.17.0",
+        "webxdc-vite-plugins": "github:webxdc/webxdc-vite-plugins"
+    },
+    "dependencies": {
+        "webxdc-scores": "github:webxdc/webxdc-scores"
+    }
 }

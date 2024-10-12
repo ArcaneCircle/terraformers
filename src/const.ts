@@ -120,6 +120,6 @@ export const INIT_SABER_DMG = 20
 export const SABER_DMG_INC = 10
 export const SABER_MAX_DMG = 80
 
-export const INIT_SABER_FIRE_RATE=2500
-export const DEC_SABER_FIRE_RATE=700
-export const MIN_SABER_FIRE_RATE=400
+export const INIT_SABER_FIRE_RATE = 2500
+export const DEC_SABER_FIRE_RATE = 700
+export const MIN_SABER_FIRE_RATE = 400

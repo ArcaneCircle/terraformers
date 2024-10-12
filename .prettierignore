@@ -1,0 +1,7 @@
+dist
+dist-xdc
+pnpm-lock.yaml
+
+assets
+src/core/zzfx.ts
+src/core/zzfxm.ts
