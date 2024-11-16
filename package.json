@@ -1,5 +1,6 @@
 {
     "private": true,
+    "type": "module",
     "scripts": {
         "start": "vite --port 3000",
         "emulator": "concurrently \"npm start\" \"webxdc-dev run http://localhost:3000\"",
@@ -10,11 +11,11 @@
     "devDependencies": {
         "concurrently": "^9.0.1",
         "prettier": "^3.3.3",
-        "vite": "^4.5.5",
-        "webxdc-dev": "^0.17.0",
-        "webxdc-vite-plugins": "github:webxdc/webxdc-vite-plugins"
+        "vite": "^5.3.3",
+        "@webxdc/webxdc-dev": "latest",
+        "@webxdc/vite-plugins": "latest"
     },
     "dependencies": {
-        "webxdc-scores": "github:webxdc/webxdc-scores"
+        "@webxdc/highscores": "^5.2.0"
     }
 }

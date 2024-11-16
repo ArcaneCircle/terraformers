@@ -1,4 +1,4 @@
-import "webxdc-scores"
+import "@webxdc/highscores"
 import { loadAssets } from "./asset"
 import { CompPhysicsRun } from "./components/physics"
 import { CompRenderRun } from "./components/render"
