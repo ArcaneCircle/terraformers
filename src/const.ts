@@ -47,7 +47,7 @@ export const INC_HEALTH_CAP = 50
 export const MAX_HEALTH_CAP = 300
 
 export const INIT_HERO_SPEED = 0.06
-export const INC_HERO_SPEED = 0.01
+export const INC_HERO_SPEED = 0.02
 export const MAX_HERO_SPEED = 0.15
 
 export const INIT_PICKUP_RADIUS = 20
@@ -63,11 +63,11 @@ export const MOB1_SPEED = 0.03
 export const MOB1_HEALTH = 30
 export const MOB1_ATTACK = 12
 // zombie
-export const MOB2_SPEED = 0.04
+export const MOB2_SPEED = 0.05
 export const MOB2_HEALTH = 55
 export const MOB2_ATTACK = 20
 // ghost
-export const MOB3_SPEED = 0.05
+export const MOB3_SPEED = 0.06
 export const MOB3_HEALTH = 70
 export const MOB3_ATTACK = 30
 
