@@ -51,8 +51,8 @@ export const INC_HERO_SPEED = 0.02
 export const MAX_HERO_SPEED = 0.15
 
 export const INIT_PICKUP_RADIUS = 20
-export const INC_PICKUP_RADIUS = 10
-export const MAX_PICKUP_RADIUS = 70
+export const INC_PICKUP_RADIUS = 20
+export const MAX_PICKUP_RADIUS = 80
 
 // blob
 export const MOB0_SPEED = 0.02
