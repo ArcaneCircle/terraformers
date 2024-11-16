@@ -186,7 +186,8 @@ export const usePowerup = (power: Powerup) => {
             stats.pickupRadius += INC_PICKUP_RADIUS
             break
         case Powerup.heal:
-            stats.health = clamp(stats.health + HEAL_AMT, 0, stats.maxHealth)
+            const hp = ~~(stats.maxHealth * HEAL_AMT / 100)
+            stats.health = clamp(stats.health + hp, 0, stats.maxHealth)
             break
     }
 }

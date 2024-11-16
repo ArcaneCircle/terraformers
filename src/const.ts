@@ -31,7 +31,7 @@ export const SPAWN_RADIUS = WIDTH / 2
 export const COIN_XP = 10
 export const COIN_PICKUP_SPEED = 0.16
 export const VULNERABILITY_MS = 700
-export const HEAL_AMT = 5
+export const HEAL_AMT = 10
 
 export const INIT_LEVEL_XP = 50
 export const LEVEL_XP_CAP_INC = 70
@@ -43,8 +43,8 @@ export const MOB_MAX_COLLISION_SNAP_DIST = 1
 
 // hero properties
 export const INIT_HEALTH_CAP = 100
-export const INC_HEALTH_CAP = 20
-export const MAX_HEALTH_CAP = 200
+export const INC_HEALTH_CAP = 50
+export const MAX_HEALTH_CAP = 300
 
 export const INIT_HERO_SPEED = 0.06
 export const INC_HERO_SPEED = 0.01
