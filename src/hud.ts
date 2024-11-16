@@ -56,12 +56,26 @@ export const loadHud = () => {
             ~~(UI_BAR_WIDTH * (stats.health / stats.maxHealth)),
             UI_BAR_HEIGHT,
         )
+        renderFontTex(
+            ctx,
+            stats.health + "/" + stats.maxHealth,
+            UI_BAR_X + element_offset+1,
+            UI_BAR_Y+1
+        )
+
+        const blueY = ~~(UI_BAR_Y + UI_BAR_HEIGHT*1.5)
         ctx.fillStyle = BLUE
         ctx.fillRect(
             UI_BAR_X + element_offset,
-            UI_BAR_Y + UI_BAR_HEIGHT * 2,
+            blueY,
             ~~(UI_BAR_WIDTH * (stats.xp / stats.levelXp)),
             UI_BAR_HEIGHT,
+        )
+        renderFontTex(
+            ctx,
+            stats.xp + "/" + stats.levelXp,
+            UI_BAR_X + element_offset+1,
+            blueY+1
         )
 
         // bars border
@@ -74,16 +88,16 @@ export const loadHud = () => {
         )
         ctx.strokeRect(
             UI_BAR_X + element_offset,
-            UI_BAR_Y + UI_BAR_HEIGHT * 2,
+            blueY,
             UI_BAR_WIDTH,
             UI_BAR_HEIGHT,
         )
         // bars logo
-        ctx.drawImage(assets.eHeart, UI_BAR_X - 2, UI_BAR_Y - 2, 8, 8)
+        ctx.drawImage(assets.eHeart, UI_BAR_X - 2, UI_BAR_Y - 1, 8, 8)
         ctx.drawImage(
             assets.eXp,
             UI_BAR_X - 2,
-            ~~(UI_BAR_Y + UI_BAR_HEIGHT * 2) - 2,
+            blueY - 1,
             8,
             8,
         )

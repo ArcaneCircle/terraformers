@@ -8,10 +8,10 @@ export const JOYSTICK_THUMB_SIZE = 10
 // ui
 export const FONT_SIZE = 1
 export const MENU_FONT_SIZE = 3
-export const UI_BAR_WIDTH = WIDTH / 2
-export const UI_BAR_HEIGHT = 5
+export const UI_BAR_WIDTH = WIDTH / 4
+export const UI_BAR_HEIGHT = 8
 export const UI_TEXT_DURATION = 300
-export const UI_BAR_X = ~~((WIDTH - UI_BAR_WIDTH) / 7)
+export const UI_BAR_X = ~~((WIDTH - UI_BAR_WIDTH) / 10)
 export const UI_BAR_Y = 10
 export const UI_TRANSITION_DURATION = 900
 export const BLACK0 = "#212123"
