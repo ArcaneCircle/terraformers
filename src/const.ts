@@ -88,15 +88,15 @@ export const BULLET_AGE = 3e3
 // aura
 export const INIT_AURA_RADIUS = 30
 export const INC_AURA_RADIUS = 10
-export const MAX_AURA_RADIUS = 60
+export const MAX_AURA_RADIUS = 50
 
 export const INIT_AURA_DAMAGE = 10
-export const INC_AURA_DAMAGE = 7
-export const MAX_AURA_DAMAGE = 52
+export const INC_AURA_DAMAGE = 5
+export const MAX_AURA_DAMAGE = 30
 
-export const INIT_AURA_DAMAGE_RATE = 500
+export const INIT_AURA_DAMAGE_RATE = 800
 export const DEC_AURA_DAMAGE_RATE = 100
-export const MIN_AURA_DAMAGE_RATE = 200
+export const MIN_AURA_DAMAGE_RATE = 500
 
 // orbs
 export const MAX_ORBS_NUM = 7
