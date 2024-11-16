@@ -74,13 +74,13 @@ export const MOB3_ATTACK = 30
 // gameplay
 
 // bullet
-export const INIT_BULLET_FIRE_RATE = 2500
-export const BULLET_FIRE_RATE_DEC = 600
+export const INIT_BULLET_FIRE_RATE = 1600
+export const BULLET_FIRE_RATE_DEC = 500
 export const MIN_BULLET_FIRE_RATE = 100
 
 export const INIT_BULLET_DMG = 10
-export const MAX_BULLET_DMG = 50
-export const BULLET_DMG_INC = 10
+export const MAX_BULLET_DMG = 70
+export const BULLET_DMG_INC = 20
 
 export const BULLET_SPEED = 0.2
 export const BULLET_AGE = 3e3
