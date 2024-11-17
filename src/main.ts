@@ -21,7 +21,7 @@ loadSounds()
 ;(async () => {
     await window.highscores.init({
         getAnnouncement: (name, result) => {
-            const zeroPad = (numb) => numb < 10 ? "0" + numb : numb
+            const zeroPad = (numb) => (numb < 10 ? "0" + numb : numb)
             const abstime = ~~result.time
             const mins = zeroPad(~~(abstime / 60))
             const secs = zeroPad(abstime % 60)

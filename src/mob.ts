@@ -18,7 +18,7 @@ import {
     MOB_MAX_COLLISION_SNAP_DIST,
     SPAWN_RADIUS,
     SPRITE_ANIM_RATE_MS,
-    WHITE
+    WHITE,
 } from "./const"
 import { ticker } from "./core/interpolation"
 import { aabb, angleToVec, distance, limitMagnitude, rand } from "./core/math"
@@ -323,40 +323,58 @@ export const loadMob = () => {
         }
 
         // todo optimize out offscreen mobs?
-        iterMobs((x, y, id, _flip, _near, _frame, _framet, type, _dmgTicker, boss) => {
-            // check proximity to hero
-            E.near[id] = isNearHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
+        iterMobs(
+            (
+                x,
+                y,
+                id,
+                _flip,
+                _near,
+                _frame,
+                _framet,
+                type,
+                _dmgTicker,
+                boss,
+            ) => {
+                // check proximity to hero
+                E.near[id] = isNearHero(
+                    x + center,
+                    y + center,
+                    MOB_SIZE,
+                    MOB_SIZE,
+                )
 
-            // check hero collision
-            // todo: possible optimization: skip detection if hero is invulnerable
-            if (
-                E.near[id] &&
-                isHittingHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
-            ) {
-                hitHero(attacks[type]*(boss? 2 : 1))
-            } else {
-                // move towards hero
-                // note that we only move if not hitting hero
-                _vec.x = hero.x - x
-                _vec.y = hero.y - y
-                limitMagnitude(_vec)
-                const speed = speeds[type]+(boss? 0.01 : 0)
-                E.x[id] += _vec.x * speed * dt
-                E.y[id] += _vec.y * speed * dt
-                E.flipped[id] = _vec.x < 0
-            }
+                // check hero collision
+                // todo: possible optimization: skip detection if hero is invulnerable
+                if (
+                    E.near[id] &&
+                    isHittingHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
+                ) {
+                    hitHero(attacks[type] * (boss ? 2 : 1))
+                } else {
+                    // move towards hero
+                    // note that we only move if not hitting hero
+                    _vec.x = hero.x - x
+                    _vec.y = hero.y - y
+                    limitMagnitude(_vec)
+                    const speed = speeds[type] + (boss ? 0.01 : 0)
+                    E.x[id] += _vec.x * speed * dt
+                    E.y[id] += _vec.y * speed * dt
+                    E.flipped[id] = _vec.x < 0
+                }
 
-            // sprite animation
-            if ((E.frameTicker[id] += dt) > SPRITE_ANIM_RATE_MS) {
-                E.frameTicker[id] = 0
-                E.frame[id] = (E.frame[id] + 1) % maxFrames
-            }
+                // sprite animation
+                if ((E.frameTicker[id] += dt) > SPRITE_ANIM_RATE_MS) {
+                    E.frameTicker[id] = 0
+                    E.frame[id] = (E.frame[id] + 1) % maxFrames
+                }
 
-            // hit animation
-            if (E.dmgTicker[id] > 0) {
-                E.dmgTicker[id] -= dt
-            }
-        })
+                // hit animation
+                if (E.dmgTicker[id] > 0) {
+                    E.dmgTicker[id] -= dt
+                }
+            },
+        )
 
         // solve collisions within mobs, only for the ones close to hero
         // we don't need high accuracy or stability, so offsets are limited
@@ -421,7 +439,7 @@ export const loadMob = () => {
                 _ticker,
                 type,
                 dmgAnim,
-                boss
+                boss,
             ) => {
                 const dirOffset = flipped ? 3 : 0
                 const asset =
@@ -442,8 +460,12 @@ export const loadMob = () => {
                 ctx.drawImage(frame, ~~(x - cam.x), ~~(y - cam.y))
                 if (boss) {
                     ctx.fillStyle = WHITE
-                    ctx.font = '10px Arial';
-                    ctx.fillText("☠", ~~(x - cam.x + MOB_SIZE/2), ~~(y - cam.y + MOB_SIZE/2-2));
+                    ctx.font = "10px Arial"
+                    ctx.fillText(
+                        "☠",
+                        ~~(x - cam.x + MOB_SIZE / 2),
+                        ~~(y - cam.y + MOB_SIZE / 2 - 2),
+                    )
                 }
                 // draw collision rect
                 //if (DEBUG) {
@@ -481,7 +503,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
         const i = freePool.pop()!
         E.x[i] = spawnPos.x
         E.y[i] = spawnPos.y
-        E.health[i] = healths[type]*(boss? 2 : 1)
+        E.health[i] = healths[type] * (boss ? 2 : 1)
         E.boss[i] = boss
         E.flipped[i] = false
         E.frame[i] = 0
@@ -494,7 +516,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
     }
     E.x.push(spawnPos.x)
     E.y.push(spawnPos.y)
-    E.health.push(healths[type]*(boss? 2 : 1))
+    E.health.push(healths[type] * (boss ? 2 : 1))
     E.boss.push(boss)
     E.flipped.push(false)
     E.frame.push(0)

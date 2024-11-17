@@ -59,11 +59,11 @@ export const loadHud = () => {
         renderFontTex(
             ctx,
             stats.health + "/" + stats.maxHealth,
-            UI_BAR_X + element_offset+1,
-            UI_BAR_Y+1
+            UI_BAR_X + element_offset + 1,
+            UI_BAR_Y + 1,
         )
 
-        const blueY = ~~(UI_BAR_Y + UI_BAR_HEIGHT*1.5)
+        const blueY = ~~(UI_BAR_Y + UI_BAR_HEIGHT * 1.5)
         ctx.fillStyle = BLUE
         ctx.fillRect(
             UI_BAR_X + element_offset,
@@ -74,8 +74,8 @@ export const loadHud = () => {
         renderFontTex(
             ctx,
             stats.xp + "/" + stats.levelXp,
-            UI_BAR_X + element_offset+1,
-            blueY+1
+            UI_BAR_X + element_offset + 1,
+            blueY + 1,
         )
 
         // bars border
@@ -94,13 +94,7 @@ export const loadHud = () => {
         )
         // bars logo
         ctx.drawImage(assets.eHeart, UI_BAR_X - 2, UI_BAR_Y - 1, 8, 8)
-        ctx.drawImage(
-            assets.eXp,
-            UI_BAR_X - 2,
-            blueY - 1,
-            8,
-            8,
-        )
+        ctx.drawImage(assets.eXp, UI_BAR_X - 2, blueY - 1, 8, 8)
 
         // time
         const abstime = ~~stats.time
