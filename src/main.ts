@@ -19,7 +19,19 @@ const processInput = initInput(canvas, WIDTH, HEIGHT)
 const postProcess = setupPostProcess(canvas, WIDTH * 4, HEIGHT * 4)
 loadSounds()
 ;(async () => {
-    await window.highscores.init()
+    await window.highscores.init({
+        getAnnouncement: (name, result) => {
+            const zeroPad = (numb) => numb < 10 ? "0" + numb : numb
+            const abstime = ~~result.time
+            const mins = zeroPad(~~(abstime / 60))
+            const secs = zeroPad(abstime % 60)
+            return `${name} scored ${result.score} in ${mins}:${secs}`
+        },
+        compareScores: (score1, score2) => score1.score - score2.score,
+        getInitialScore: () => {
+            return { score: 0, time: 0 }
+        },
+    })
     const assets = await loadAssets()
     // display note if device is in portrait
     if (innerWidth < innerHeight) {

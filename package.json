@@ -16,6 +16,6 @@
         "@webxdc/vite-plugins": "latest"
     },
     "dependencies": {
-        "@webxdc/highscores": "^5.2.0"
+        "@webxdc/highscores": "^5.2.1"
     }
 }

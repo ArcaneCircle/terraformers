@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@webxdc/highscores':
-        specifier: ^5.2.0
-        version: 5.2.0
+        specifier: ^5.2.1
+        version: 5.2.1
     devDependencies:
       '@webxdc/vite-plugins':
         specifier: latest
@@ -821,8 +821,8 @@ packages:
       terser: ^5.4.0
       vite: ^5.0.0
 
-  '@webxdc/highscores@5.2.0':
-    resolution: {integrity: sha512-Xh8HICjQuyNcZ4RdalycXH7LR+GjfC9iQbJf2xvWxVJHYP5B+ywMkspE9875GYaRIMZM40Mks6UrifxzfmvooA==}
+  '@webxdc/highscores@5.2.1':
+    resolution: {integrity: sha512-dDmAH/FZUPAmLrwptsf0dU08SK+wRtLjL1ydCbCqEtQGNELHrRBi/UCQxIPNPWgwR1ZDVaz2HaXc8qMa0EsiMw==}
 
   '@webxdc/vite-plugins@1.0.0':
     resolution: {integrity: sha512-mR3y3SlCgvohSM5rb3ml90IA3lUqBzn0fwkXERiR3P/9x9y3lWsHqlrFWf5qSplNF4IKZ/KZEMIB1qyQLl7yLA==}
@@ -2570,7 +2570,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@webxdc/highscores@5.2.0':
+  '@webxdc/highscores@5.2.1':
     dependencies:
       jssha: 3.3.1
 
