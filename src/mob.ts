@@ -18,6 +18,7 @@ import {
     MOB_MAX_COLLISION_SNAP_DIST,
     SPAWN_RADIUS,
     SPRITE_ANIM_RATE_MS,
+    WHITE
 } from "./const"
 import { ticker } from "./core/interpolation"
 import { aabb, angleToVec, distance, limitMagnitude, rand } from "./core/math"
@@ -47,6 +48,7 @@ const E = {
     dmgTicker: [] as number[],
     type: [] as MobType[],
     active: [] as boolean[],
+    boss: [] as boolean[],
 }
 
 // stores ids of free entities
@@ -59,6 +61,7 @@ export const MOB_SIZE = 8
 const DMG_BLINK_ANIM_TIME = 200
 const center = MOB_SIZE / 2
 
+const fiveSec = ticker(5000)
 const tsec = ticker(2000)
 const sec = ticker(1000)
 const sec2 = ticker(500)
@@ -122,22 +125,30 @@ export const loadMob = () => {
     unloadPhysics = addPhysicsComp((dt) => {
         // mob spawn manager
         if (stats.time < 30) {
-            if (sec.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+            } else if (sec.tick(dt)) {
                 spawnMob(MobType.blob)
             }
         } else if (stats.time < 60) {
-            if (sec2.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+            } else if (sec2.tick(dt)) {
                 spawnMob(MobType.blob)
             }
         } else if (stats.time < 90) {
             if (sec.tick(dt)) {
                 spawnMob(MobType.blob)
             }
-            if (tsec.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.fly, true)
+            } else if (tsec.tick(dt)) {
                 spawnMob(MobType.fly)
             }
         } else if (stats.time < 120) {
-            if (sec2.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+            } else if (sec2.tick(dt)) {
                 spawnMob(MobType.blob)
             }
             if (sec.tick(dt)) {
@@ -147,22 +158,34 @@ export const loadMob = () => {
             if (sec4.tick(dt)) {
                 spawnMob(MobType.blob)
             }
-            if (sec2.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.fly, true)
+            } else if (sec2.tick(dt)) {
                 spawnMob(MobType.fly)
             }
         } else if (stats.time < 240) {
-            if (sec4.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+                spawnMob(MobType.fly, true)
+            } else if (sec4.tick(dt)) {
                 spawnMob(MobType.blob)
                 spawnMob(MobType.fly)
             }
         } else if (stats.time < 270) {
-            if (secf.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+                spawnMob(MobType.blob, true)
+                spawnMob(MobType.blob, true)
+            } else if (secf.tick(dt)) {
                 spawnMob(MobType.blob)
                 spawnMob(MobType.blob)
                 spawnMob(MobType.blob)
             }
         } else if (stats.time < 300) {
-            if (secf.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.fly, true)
+                spawnMob(MobType.fly, true)
+            } else if (secf.tick(dt)) {
                 spawnMob(MobType.fly)
                 spawnMob(MobType.fly)
             }
@@ -170,15 +193,20 @@ export const loadMob = () => {
             if (sec2.tick(dt)) {
                 spawnMob(MobType.fly)
             }
-            if (tsec.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.zombie, true)
+            } else if (tsec.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 360) {
             if (sec4.tick(dt)) {
                 spawnMob(MobType.fly)
             }
-            if (sec2.tick(dt)) {
-                spawnMob(MobType.blob)
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.blob, true)
+                spawnMob(MobType.zombie, true)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.blob, true)
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 420) {
@@ -186,15 +214,22 @@ export const loadMob = () => {
                 spawnMob(MobType.blob)
                 spawnMob(MobType.fly)
             }
-            if (sec2.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.zombie, true)
+            } else if (sec2.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 480) {
-            if (secf.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.zombie, true)
+            } else if (secf.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 540) {
-            if (secf.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.fly, true)
+                spawnMob(MobType.fly, true)
+            } else if (secf.tick(dt)) {
                 spawnMob(MobType.fly)
                 spawnMob(MobType.fly)
             }
@@ -202,7 +237,10 @@ export const loadMob = () => {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 600) {
-            if (secf.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.fly, true)
+                spawnMob(MobType.zombie, true)
+            } else if (secf.tick(dt)) {
                 spawnMob(MobType.fly)
                 spawnMob(MobType.zombie)
             }
@@ -215,26 +253,35 @@ export const loadMob = () => {
             if (sec4.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
-            if (sec.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.ghost, true)
+            } else if (sec.tick(dt)) {
                 spawnMob(MobType.ghost)
             }
         } else if (stats.time < 660) {
             if (sec2.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
-            if (sec.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.ghost, true)
+                spawnMob(MobType.blob, true)
+            } else if (sec.tick(dt)) {
                 spawnMob(MobType.ghost)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.blob, true)
             }
         } else if (stats.time < 690) {
             if (sec2.tick(dt)) {
                 spawnMob(MobType.ghost)
             }
-            if (sec4.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.zombie, true)
+            } else if (sec4.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 720) {
-            if (sec4.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.ghost, true)
+            } else if (sec4.tick(dt)) {
                 spawnMob(MobType.ghost)
             }
             if (sec2.tick(dt)) {
@@ -244,11 +291,11 @@ export const loadMob = () => {
         } else if (stats.time < 750) {
             if (sec4.tick(dt)) {
                 spawnMob(MobType.zombie)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.fly, true)
             }
             if (sec2.tick(dt)) {
                 spawnMob(MobType.ghost)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.blob, true)
             }
         } else if (stats.time < 780) {
             if (secf.tick(dt)) {
@@ -276,7 +323,7 @@ export const loadMob = () => {
         }
 
         // todo optimize out offscreen mobs?
-        iterMobs((x, y, id, _flip, _near, _frame, _framet, type) => {
+        iterMobs((x, y, id, _flip, _near, _frame, _framet, type, _dmgTicker, boss) => {
             // check proximity to hero
             E.near[id] = isNearHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
 
@@ -286,14 +333,14 @@ export const loadMob = () => {
                 E.near[id] &&
                 isHittingHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
             ) {
-                hitHero(attacks[type])
+                hitHero(attacks[type]*(boss? 2 : 1))
             } else {
                 // move towards hero
                 // note that we only move if not hitting hero
                 _vec.x = hero.x - x
                 _vec.y = hero.y - y
                 limitMagnitude(_vec)
-                const speed = speeds[type]
+                const speed = speeds[type]+(boss? 0.01 : 0)
                 E.x[id] += _vec.x * speed * dt
                 E.y[id] += _vec.y * speed * dt
                 E.flipped[id] = _vec.x < 0
@@ -374,6 +421,7 @@ export const loadMob = () => {
                 _ticker,
                 type,
                 dmgAnim,
+                boss
             ) => {
                 const dirOffset = flipped ? 3 : 0
                 const asset =
@@ -392,6 +440,11 @@ export const loadMob = () => {
                 }
 
                 ctx.drawImage(frame, ~~(x - cam.x), ~~(y - cam.y))
+                if (boss) {
+                    ctx.fillStyle = WHITE
+                    ctx.font = '10px Arial';
+                    ctx.fillText("☠", ~~(x - cam.x + MOB_SIZE/2), ~~(y - cam.y + MOB_SIZE/2-2));
+                }
                 // draw collision rect
                 //if (DEBUG) {
                 //    ctx.strokeStyle = BLACK0
@@ -420,7 +473,7 @@ export const loadMob = () => {
 }
 
 /** returns mob index */
-const spawnMob = (type: MobType) => {
+const spawnMob = (type: MobType, boss: boolean = false) => {
     const spawnPos = angleToVec(rand(0, Math.PI * 2))
     spawnPos.x = spawnPos.x * SPAWN_RADIUS + hero.x
     spawnPos.y = spawnPos.y * SPAWN_RADIUS + hero.y
@@ -428,7 +481,8 @@ const spawnMob = (type: MobType) => {
         const i = freePool.pop()!
         E.x[i] = spawnPos.x
         E.y[i] = spawnPos.y
-        E.health[i] = healths[type]
+        E.health[i] = healths[type]*(boss? 2 : 1)
+        E.boss[i] = boss
         E.flipped[i] = false
         E.frame[i] = 0
         E.frameTicker[i] = 0
@@ -440,7 +494,8 @@ const spawnMob = (type: MobType) => {
     }
     E.x.push(spawnPos.x)
     E.y.push(spawnPos.y)
-    E.health.push(healths[type])
+    E.health.push(healths[type]*(boss? 2 : 1))
+    E.boss.push(boss)
     E.flipped.push(false)
     E.frame.push(0)
     E.frameTicker.push(0)
@@ -475,6 +530,7 @@ export const iterMobs = (
         frameTicker: number,
         type: MobType,
         dmgTicker: number,
+        boss: boolean,
     ) => boolean | void,
 ) => {
     for (let i = 0; i < E.x.length; i++) {
@@ -489,6 +545,7 @@ export const iterMobs = (
                 E.frameTicker[i],
                 E.type[i],
                 E.dmgTicker[i],
+                E.boss[i],
             )
             if (end) {
                 break
