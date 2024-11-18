@@ -126,7 +126,7 @@ export const loadMob = () => {
         // mob spawn manager
         if (stats.time < 30) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.fly)
             } else if (sec.tick(dt)) {
                 spawnMob(MobType.blob)
             }
@@ -270,16 +270,16 @@ export const loadMob = () => {
                 spawnMob(MobType.blob, true)
             }
         } else if (stats.time < 690) {
-            if (sec2.tick(dt)) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.ghost, true)
+            } else if (sec2.tick(dt)) {
                 spawnMob(MobType.ghost)
             }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.zombie, true)
-            } else if (sec4.tick(dt)) {
+            if (sec4.tick(dt)) {
                 spawnMob(MobType.zombie)
             }
         } else if (stats.time < 720) {
-            if (fiveSec.tick(dt)) {
+            if (tsec.tick(dt)) {
                 spawnMob(MobType.ghost, true)
             } else if (sec4.tick(dt)) {
                 spawnMob(MobType.ghost)
@@ -293,9 +293,12 @@ export const loadMob = () => {
                 spawnMob(MobType.zombie)
                 spawnMob(MobType.fly, true)
             }
-            if (sec2.tick(dt)) {
-                spawnMob(MobType.ghost)
+            if (tsec.tick(dt)) {
+                spawnMob(MobType.ghost, true)
                 spawnMob(MobType.blob, true)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.ghost)
+                spawnMob(MobType.blob)
             }
         } else if (stats.time < 780) {
             if (secf.tick(dt)) {
@@ -303,7 +306,7 @@ export const loadMob = () => {
                 spawnMob(MobType.ghost)
                 spawnMob(MobType.zombie)
                 spawnMob(MobType.fly)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.blob, true)
                 spawnMob(MobType.blob)
                 spawnMob(MobType.blob)
             }
@@ -506,7 +509,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
         const i = freePool.pop()!
         E.x[i] = spawnPos.x
         E.y[i] = spawnPos.y
-        E.health[i] = healths[type] * (boss ? 2 : 1)
+        E.health[i] = healths[type] * (boss ? 3 : 1)
         E.boss[i] = boss
         E.flipped[i] = false
         E.frame[i] = 0
@@ -519,7 +522,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
     }
     E.x.push(spawnPos.x)
     E.y.push(spawnPos.y)
-    E.health.push(healths[type] * (boss ? 2 : 1))
+    E.health.push(healths[type] * (boss ? 3 : 1))
     E.boss.push(boss)
     E.flipped.push(false)
     E.frame.push(0)

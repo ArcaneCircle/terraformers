@@ -283,7 +283,6 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
                     startBtn.y + 10,
                 )
             }
-            renderFontTex(ctx, "BY SAUD", WIDTH / 2 + 110, HEIGHT - 10)
             break
 
         case Scene.powerup:
