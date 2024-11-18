@@ -70,7 +70,6 @@ git push origin v1.0.1
 ## Credits
 
 -   This is a fork of https://github.com/rottencandy/js13k2024
--   CRT Shader: https://www.shadertoy.com/view/WsVSzV
 -   [Zzfxm](https://github.com/keithclark/ZzFXM) for music
 -   Hero sprite is a modification of: https://trevor-pupkin.itch.io/outer-buddies
 -   mob0, mob0boss, mob2, mob2boss and mob3 images inspired by: https://opengameart.org/content/frogatto-friends-npc-pack
