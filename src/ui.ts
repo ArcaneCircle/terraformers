@@ -223,7 +223,7 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             ctx.fillStyle = WHITE
             renderFontTex(
                 ctx,
-                "XIICUR SURVIIVORS\nA JS13K 2024 GAME\nMADE BY SAUD WWW.SAUD.WTF\n\nLOADING...",
+                "XIICUR SURVIIVORS\nINITIAL CREATOR: SAUD WWW.SAUD.WTF\nWEBXDC PORT BY DELTAZEN\n\nLOADING...",
                 20,
                 20,
             )

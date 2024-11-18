@@ -442,14 +442,26 @@ export const loadMob = () => {
                 boss,
             ) => {
                 const dirOffset = flipped ? 3 : 0
-                const asset =
-                    type === MobType.blob
-                        ? assets.mob0
-                        : type === MobType.fly
-                          ? assets.mob1
-                          : type === MobType.zombie
-                            ? assets.mob2
-                            : assets.mob3
+                let asset
+                if (boss) {
+                    asset =
+                        type === MobType.blob
+                            ? assets.mob0boss
+                            : type === MobType.fly
+                              ? assets.mob1boss
+                              : type === MobType.zombie
+                                ? assets.mob2boss
+                                : assets.mob3boss
+                } else {
+                    asset =
+                        type === MobType.blob
+                            ? assets.mob0
+                            : type === MobType.fly
+                              ? assets.mob1
+                              : type === MobType.zombie
+                                ? assets.mob2
+                                : assets.mob3
+                }
                 const frame = asset[frames[currentFrame] + dirOffset]
 
                 // blink if damaged
@@ -458,15 +470,6 @@ export const loadMob = () => {
                 }
 
                 ctx.drawImage(frame, ~~(x - cam.x), ~~(y - cam.y))
-                if (boss) {
-                    ctx.fillStyle = WHITE
-                    ctx.font = "10px Arial"
-                    ctx.fillText(
-                        "☠",
-                        ~~(x - cam.x + MOB_SIZE / 2),
-                        ~~(y - cam.y + MOB_SIZE / 2 - 2),
-                    )
-                }
                 // draw collision rect
                 //if (DEBUG) {
                 //    ctx.strokeStyle = BLACK0

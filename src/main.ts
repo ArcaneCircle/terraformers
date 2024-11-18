@@ -32,11 +32,11 @@ loadSounds()
             return { score: 0, time: 0 }
         },
     })
+
+    console.log("loading assets...")
     const assets = await loadAssets()
-    // display note if device is in portrait
-    if (innerWidth < innerHeight) {
-        alert("for best experience use landscape mode")
-    }
+    console.log("Done loading assets")
+
     loadIntro()
     ;(onresize = () => {
         resize(offscreenCanvas, WIDTH, HEIGHT)
