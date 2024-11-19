@@ -47,7 +47,7 @@ export const INIT_HEALTH_CAP = 100
 export const INC_HEALTH_CAP = 50
 export const MAX_HEALTH_CAP = 300
 
-export const INIT_HERO_SPEED = 0.06
+export const INIT_HERO_SPEED = 0.04
 export const INC_HERO_SPEED = 0.02
 export const MAX_HERO_SPEED = 0.15
 
