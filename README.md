@@ -1,12 +1,11 @@
-# Xiicur Survivors
+# Terraformers
 
 ## Story
 
-2133 AD: The curse of the number 13 inflicted on earth is found to originate from the exoplanet Xiicur.
-
-You are humanity's best hope, tasked with gathering data from this planet to help rid everyone of this phobia.
-
-Can you survive this harsh planet long enough to uncover the secrets behind the curse?
+2133 AD: Artificial Intelligence finally took your job,
+worried about not being able to pay rent for your sleep capsule,
+you decided to get your hands dirty as a cleaner in a terraforming company,
+clearing planets from hostile live forms for a low wage.
 
 ### How to play
 
@@ -69,7 +68,7 @@ git push origin v1.0.1
 
 ## Credits
 
--   This is a fork of https://github.com/rottencandy/js13k2024
+-   This is a fork of [Xiicur Survivors](https://github.com/rottencandy/js13k2024) by [saud](https://github.com/rottencandy)
 -   [Zzfxm](https://github.com/keithclark/ZzFXM) for music
 -   Hero sprite is a modification of: https://trevor-pupkin.itch.io/outer-buddies
 -   mob inspiration: https://opengameart.org/content/frogatto-friends-npc-pack
