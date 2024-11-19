@@ -384,14 +384,6 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
                 ~~(WIDTH / 3) - 10,
                 ~~(HEIGHT / 5),
             )
-            if (stats.won) {
-                renderFontTex(
-                    ctx,
-                    "YOU HAVE LIFTED THE CURSE!",
-                    ~~(WIDTH / 3),
-                    HEIGHT / 5 + 25,
-                )
-            }
 
             // time
             const abstime = ~~stats.time
