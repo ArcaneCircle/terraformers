@@ -39,8 +39,6 @@ const selectPowerup = (id: PowerupId) => () => {
 const transition = ticker(UI_TRANSITION_DURATION)
 
 const halfSecond = ticker(500)
-// this ticker is only used once, no need to bother with resetting
-const introTime = ticker(4e3, false)
 let buttonBlink = false
 
 let runTransition = false
@@ -139,9 +137,6 @@ export const updateUI = (dt: number) => {
     }
     switch (scene) {
         case Scene.intro:
-            if (introTime.tick(dt)) {
-                loadTitle()
-            }
             break
         case Scene.title:
             startBtn.update()

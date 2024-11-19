@@ -6,7 +6,7 @@ import { HEIGHT, WIDTH } from "./const"
 import { resize } from "./core/canvas"
 import { initInput } from "./core/input"
 import { loop } from "./core/loop"
-import { loadIntro } from "./scene"
+import { loadTitle, loadIntro } from "./scene"
 import { loadSounds } from "./sound"
 import { renderUI, updateUI } from "./ui"
 
@@ -14,7 +14,6 @@ const canvas = document.getElementById("c") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")!
 const processInput = initInput(canvas, WIDTH, HEIGHT)
 
-resize(canvas, WIDTH, HEIGHT)
 loadSounds()
 ;(async () => {
     await window.highscores.init({
@@ -30,15 +29,20 @@ loadSounds()
             return { score: 0, time: 0 }
         },
     })
-
-    console.log("loading assets...")
-    const assets = await loadAssets()
-    console.log("Done loading assets")
-
-    loadIntro()
     ;(onresize = () => {
         resize(canvas, WIDTH, HEIGHT)
     })()
+
+    loadIntro()
+    renderUI(ctx, null)
+    console.log("loading assets...")
+    const start = new Date()
+    const assets = await loadAssets()
+    const toWait = 3e3 - (new Date() - start)
+    if (toWait > 0) {
+        await new Promise((res) => setTimeout(res, toWait))
+    }
+    loadTitle()
 
     loop(
         (dt) => {
