@@ -74,4 +74,4 @@ git push origin v1.0.1
 -   Hero sprite is a modification of: https://trevor-pupkin.itch.io/outer-buddies
 -   mob inspiration: https://opengameart.org/content/frogatto-friends-npc-pack
 -   mob inspiration: https://opengameart.org/content/super-dead-gunner-reaperbot-enemy
--   app icon and intro background by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-space-gunner-merc-redux-space-junkyard-environment
+-   app icon and title screen background by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-space-gunner-merc-redux-space-junkyard-environment
