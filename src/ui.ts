@@ -10,7 +10,7 @@ import {
     UI_TRANSITION_DURATION,
     WHITE,
     WIDTH,
-    APPNAME
+    APPNAME,
 } from "./const"
 import { type CTX } from "./core/canvas"
 import { renderFont, renderFontTex } from "./core/font"
@@ -219,7 +219,8 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             ctx.fillStyle = WHITE
             renderFontTex(
                 ctx,
-                APPNAME+"\n\nBASED ON XIICUR SURVIIVORS BY WWW.SAUD.WTF\n\nLOADING...",
+                APPNAME +
+                    "\n\nBASED ON XIICUR SURVIIVORS BY WWW.SAUD.WTF\n\nLOADING...",
                 20,
                 20,
             )
@@ -247,7 +248,7 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
                 ctx,
                 APPNAME,
                 MENU_FONT_SIZE,
-                ~~(WIDTH / 3.6) -1,
+                ~~(WIDTH / 3.6) - 1,
                 titleY,
             )
 
