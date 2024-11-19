@@ -75,3 +75,5 @@ git push origin v1.0.1
 -   mob inspiration: https://opengameart.org/content/frogatto-friends-npc-pack
 -   mob inspiration: https://opengameart.org/content/super-dead-gunner-reaperbot-enemy
 -   app icon and title screen background by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-space-gunner-merc-redux-space-junkyard-environment
+-   mob3 was created by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-gunner-batch-3
+-   some public domain mobs taken from: https://opengameart.org/content/16x16-fantasy-rpg-trash-mobs-animated
