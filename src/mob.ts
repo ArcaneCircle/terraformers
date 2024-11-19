@@ -15,6 +15,18 @@ import {
     MOB3_ATTACK,
     MOB3_HEALTH,
     MOB3_SPEED,
+    MOB0BOSS_ATTACK,
+    MOB0BOSS_HEALTH,
+    MOB0BOSS_SPEED,
+    MOB1BOSS_ATTACK,
+    MOB1BOSS_HEALTH,
+    MOB1BOSS_SPEED,
+    MOB2BOSS_ATTACK,
+    MOB2BOSS_HEALTH,
+    MOB2BOSS_SPEED,
+    MOB3BOSS_ATTACK,
+    MOB3BOSS_HEALTH,
+    MOB3BOSS_SPEED,
     MOB_MAX_COLLISION_SNAP_DIST,
     SPAWN_RADIUS,
     SPRITE_ANIM_RATE_MS,
@@ -29,10 +41,14 @@ import { stats } from "./stat"
 import { spawnFloatingText } from "./text"
 
 export const enum MobType {
-    blob,
-    fly,
-    zombie,
-    ghost,
+    mob0,
+    mob1,
+    mob2,
+    mob3,
+    mob0boss,
+    mob1boss,
+    mob2boss,
+    mob3boss,
 }
 
 // poor man's ecs
@@ -48,7 +64,6 @@ const E = {
     dmgTicker: [] as number[],
     type: [] as MobType[],
     active: [] as boolean[],
-    boss: [] as boolean[],
 }
 
 // stores ids of free entities
@@ -73,24 +88,36 @@ const frames = [0, 1, 2, 1]
 const maxFrames = frames.length
 
 const healths = {
-    [MobType.blob]: MOB0_HEALTH,
-    [MobType.fly]: MOB1_HEALTH,
-    [MobType.zombie]: MOB2_HEALTH,
-    [MobType.ghost]: MOB3_HEALTH,
+    [MobType.mob0]: MOB0_HEALTH,
+    [MobType.mob1]: MOB1_HEALTH,
+    [MobType.mob2]: MOB2_HEALTH,
+    [MobType.mob3]: MOB3_HEALTH,
+    [MobType.mob0boss]: MOB0BOSS_HEALTH,
+    [MobType.mob1boss]: MOB1BOSS_HEALTH,
+    [MobType.mob2boss]: MOB2BOSS_HEALTH,
+    [MobType.mob3boss]: MOB3BOSS_HEALTH,
 }
 
 const speeds = {
-    [MobType.blob]: MOB0_SPEED,
-    [MobType.fly]: MOB1_SPEED,
-    [MobType.zombie]: MOB2_SPEED,
-    [MobType.ghost]: MOB3_SPEED,
+    [MobType.mob0]: MOB0_SPEED,
+    [MobType.mob1]: MOB1_SPEED,
+    [MobType.mob2]: MOB2_SPEED,
+    [MobType.mob3]: MOB3_SPEED,
+    [MobType.mob0boss]: MOB0BOSS_SPEED,
+    [MobType.mob1boss]: MOB1BOSS_SPEED,
+    [MobType.mob2boss]: MOB2BOSS_SPEED,
+    [MobType.mob3boss]: MOB3BOSS_SPEED,
 }
 
 const attacks = {
-    [MobType.blob]: MOB0_ATTACK,
-    [MobType.fly]: MOB1_ATTACK,
-    [MobType.zombie]: MOB2_ATTACK,
-    [MobType.ghost]: MOB3_ATTACK,
+    [MobType.mob0]: MOB0_ATTACK,
+    [MobType.mob1]: MOB1_ATTACK,
+    [MobType.mob2]: MOB2_ATTACK,
+    [MobType.mob3]: MOB3_ATTACK,
+    [MobType.mob0boss]: MOB0BOSS_ATTACK,
+    [MobType.mob1boss]: MOB1BOSS_ATTACK,
+    [MobType.mob2boss]: MOB2BOSS_ATTACK,
+    [MobType.mob3boss]: MOB3BOSS_ATTACK,
 }
 
 // throwaway temporary variable for optimization
@@ -126,189 +153,189 @@ export const loadMob = () => {
         // mob spawn manager
         if (stats.time < 30) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             } else if (sec.tick(dt)) {
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
             }
         } else if (stats.time < 60) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob0boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
             }
         } else if (stats.time < 90) {
             if (sec.tick(dt)) {
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob1boss)
             } else if (tsec.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 120) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob0boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
             }
             if (sec.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 180) {
             if (sec4.tick(dt)) {
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob1boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 240) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob1boss)
             } else if (sec4.tick(dt)) {
-                spawnMob(MobType.blob)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 270) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0boss)
             } else if (secf.tick(dt)) {
-                spawnMob(MobType.blob)
-                spawnMob(MobType.blob)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
             }
         } else if (stats.time < 300) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly, true)
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob1boss)
             } else if (secf.tick(dt)) {
-                spawnMob(MobType.fly)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 330) {
             if (sec2.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.zombie, true)
+                spawnMob(MobType.mob2boss)
             } else if (tsec.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 360) {
             if (sec4.tick(dt)) {
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.zombie, true)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob2boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 420) {
             if (sec4.tick(dt)) {
-                spawnMob(MobType.blob)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob1)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.zombie, true)
+                spawnMob(MobType.mob2boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 480) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.zombie, true)
+                spawnMob(MobType.mob2boss)
             } else if (secf.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 540) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly, true)
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob1boss)
             } else if (secf.tick(dt)) {
-                spawnMob(MobType.fly)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
             }
             if (sec4.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 600) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.fly, true)
-                spawnMob(MobType.zombie, true)
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob2boss)
             } else if (secf.tick(dt)) {
-                spawnMob(MobType.fly)
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 630) {
             if (secf.tick(dt)) {
-                spawnMob(MobType.fly)
-                spawnMob(MobType.fly)
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob2)
             }
             if (sec4.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.ghost, true)
+                spawnMob(MobType.mob3boss)
             } else if (sec.tick(dt)) {
-                spawnMob(MobType.ghost)
+                spawnMob(MobType.mob3)
             }
         } else if (stats.time < 660) {
             if (sec2.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.ghost, true)
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob3boss)
+                spawnMob(MobType.mob0boss)
             } else if (sec.tick(dt)) {
-                spawnMob(MobType.ghost)
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob0boss)
             }
         } else if (stats.time < 690) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.ghost, true)
+                spawnMob(MobType.mob3boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.ghost)
+                spawnMob(MobType.mob3)
             }
             if (sec4.tick(dt)) {
-                spawnMob(MobType.zombie)
+                spawnMob(MobType.mob2)
             }
         } else if (stats.time < 720) {
             if (tsec.tick(dt)) {
-                spawnMob(MobType.ghost, true)
+                spawnMob(MobType.mob3boss)
             } else if (sec4.tick(dt)) {
-                spawnMob(MobType.ghost)
+                spawnMob(MobType.mob3)
             }
             if (sec2.tick(dt)) {
-                spawnMob(MobType.zombie)
-                spawnMob(MobType.fly)
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1)
             }
         } else if (stats.time < 750) {
             if (sec4.tick(dt)) {
-                spawnMob(MobType.zombie)
-                spawnMob(MobType.fly, true)
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1boss)
             }
             if (tsec.tick(dt)) {
-                spawnMob(MobType.ghost, true)
-                spawnMob(MobType.blob, true)
+                spawnMob(MobType.mob3boss)
+                spawnMob(MobType.mob0boss)
             } else if (sec2.tick(dt)) {
-                spawnMob(MobType.ghost)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob0)
             }
         } else if (stats.time < 780) {
             if (secf.tick(dt)) {
-                spawnMob(MobType.ghost)
-                spawnMob(MobType.ghost)
-                spawnMob(MobType.zombie)
-                spawnMob(MobType.fly)
-                spawnMob(MobType.blob, true)
-                spawnMob(MobType.blob)
-                spawnMob(MobType.blob)
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
             }
         } else {
             if (!wavesEnded) {
@@ -327,18 +354,7 @@ export const loadMob = () => {
 
         // todo optimize out offscreen mobs?
         iterMobs(
-            (
-                x,
-                y,
-                id,
-                _flip,
-                _near,
-                _frame,
-                _framet,
-                type,
-                _dmgTicker,
-                boss,
-            ) => {
+            (x, y, id, _flip, _near, _frame, _framet, type, _dmgTicker) => {
                 // check proximity to hero
                 E.near[id] = isNearHero(
                     x + center,
@@ -353,14 +369,14 @@ export const loadMob = () => {
                     E.near[id] &&
                     isHittingHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
                 ) {
-                    hitHero(attacks[type] * (boss ? 2 : 1))
+                    hitHero(attacks[type])
                 } else {
                     // move towards hero
                     // note that we only move if not hitting hero
                     _vec.x = hero.x - x
                     _vec.y = hero.y - y
                     limitMagnitude(_vec)
-                    const speed = speeds[type] + (boss ? 0.01 : 0)
+                    const speed = speeds[type]
                     E.x[id] += _vec.x * speed * dt
                     E.y[id] += _vec.y * speed * dt
                     E.flipped[id] = _vec.x < 0
@@ -442,29 +458,24 @@ export const loadMob = () => {
                 _ticker,
                 type,
                 dmgAnim,
-                boss,
             ) => {
                 const dirOffset = flipped ? 3 : 0
-                let asset
-                if (boss) {
-                    asset =
-                        type === MobType.blob
-                            ? assets.mob0boss
-                            : type === MobType.fly
-                              ? assets.mob1boss
-                              : type === MobType.zombie
-                                ? assets.mob2boss
-                                : assets.mob3boss
-                } else {
-                    asset =
-                        type === MobType.blob
-                            ? assets.mob0
-                            : type === MobType.fly
-                              ? assets.mob1
-                              : type === MobType.zombie
-                                ? assets.mob2
-                                : assets.mob3
-                }
+                const asset =
+                    type === MobType.mob0
+                        ? assets.mob0
+                        : type === MobType.mob1
+                          ? assets.mob1
+                          : type === MobType.mob2
+                            ? assets.mob2
+                            : type === MobType.mob3
+                              ? assets.mob3
+                              : type === MobType.mob0boss
+                                ? assets.mob0boss
+                                : type === MobType.mob1boss
+                                  ? assets.mob1boss
+                                  : type === MobType.mob2boss
+                                    ? assets.mob2boss
+                                    : assets.mob3boss
                 const frame = asset[frames[currentFrame] + dirOffset]
 
                 // blink if damaged
@@ -501,7 +512,7 @@ export const loadMob = () => {
 }
 
 /** returns mob index */
-const spawnMob = (type: MobType, boss: boolean = false) => {
+const spawnMob = (type: MobType) => {
     const spawnPos = angleToVec(rand(0, Math.PI * 2))
     spawnPos.x = spawnPos.x * SPAWN_RADIUS + hero.x
     spawnPos.y = spawnPos.y * SPAWN_RADIUS + hero.y
@@ -509,8 +520,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
         const i = freePool.pop()!
         E.x[i] = spawnPos.x
         E.y[i] = spawnPos.y
-        E.health[i] = healths[type] * (boss ? 3 : 1)
-        E.boss[i] = boss
+        E.health[i] = healths[type]
         E.flipped[i] = false
         E.frame[i] = 0
         E.frameTicker[i] = 0
@@ -522,8 +532,7 @@ const spawnMob = (type: MobType, boss: boolean = false) => {
     }
     E.x.push(spawnPos.x)
     E.y.push(spawnPos.y)
-    E.health.push(healths[type] * (boss ? 3 : 1))
-    E.boss.push(boss)
+    E.health.push(healths[type])
     E.flipped.push(false)
     E.frame.push(0)
     E.frameTicker.push(0)
@@ -558,7 +567,6 @@ export const iterMobs = (
         frameTicker: number,
         type: MobType,
         dmgTicker: number,
-        boss: boolean,
     ) => boolean | void,
 ) => {
     for (let i = 0; i < E.x.length; i++) {
@@ -573,7 +581,6 @@ export const iterMobs = (
                 E.frameTicker[i],
                 E.type[i],
                 E.dmgTicker[i],
-                E.boss[i],
             )
             if (end) {
                 break

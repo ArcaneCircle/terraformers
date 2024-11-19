@@ -54,22 +54,31 @@ export const INIT_PICKUP_RADIUS = 20
 export const INC_PICKUP_RADIUS = 20
 export const MAX_PICKUP_RADIUS = 80
 
-// blob
 export const MOB0_SPEED = 0.02
 export const MOB0_HEALTH = 10
 export const MOB0_ATTACK = 10
-// fly
 export const MOB1_SPEED = 0.03
 export const MOB1_HEALTH = 30
 export const MOB1_ATTACK = 12
-// zombie
 export const MOB2_SPEED = 0.05
 export const MOB2_HEALTH = 55
 export const MOB2_ATTACK = 20
-// ghost
 export const MOB3_SPEED = 0.06
 export const MOB3_HEALTH = 70
 export const MOB3_ATTACK = 30
+
+export const MOB0BOSS_SPEED = 0.03
+export const MOB0BOSS_HEALTH = 10 * 3
+export const MOB0BOSS_ATTACK = 10 * 2
+export const MOB1BOSS_SPEED = 0.04
+export const MOB1BOSS_HEALTH = 30 * 3
+export const MOB1BOSS_ATTACK = 12 * 2
+export const MOB2BOSS_SPEED = 0.06
+export const MOB2BOSS_HEALTH = 55 * 3
+export const MOB2BOSS_ATTACK = 20 * 2
+export const MOB3BOSS_SPEED = 0.07
+export const MOB3BOSS_HEALTH = 70 * 3
+export const MOB3BOSS_ATTACK = 30 * 2
 
 // gameplay
 
