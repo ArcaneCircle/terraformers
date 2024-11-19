@@ -231,6 +231,11 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
 
         // such a bespoke title rendering technique
         case Scene.title:
+            const titleY = 10
+            const bgX = ~~((WIDTH - assets.titleBg.width) / 2)
+            const bgY = ~~((HEIGHT - assets.titleBg.height) / 2)
+            ctx.drawImage(assets.titleBg, bgX, bgY + titleY)
+
             ctx.fillStyle = BLACK0
             //startBtn.render(ctx)
             ctx.fillStyle = BLACK1
@@ -239,40 +244,22 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
                 "XIICUR SURVIIVORS",
                 MENU_FONT_SIZE,
                 ~~(WIDTH / 5) + 2,
-                ~~(HEIGHT / 3) + 2,
+                titleY + 2,
             )
             ctx.fillStyle = RED
-            renderFont(
-                ctx,
-                "XII",
-                MENU_FONT_SIZE,
-                ~~(WIDTH / 5),
-                ~~(HEIGHT / 3),
-            )
+            renderFont(ctx, "XII", MENU_FONT_SIZE, ~~(WIDTH / 5), titleY)
             ctx.fillStyle = WHITE
             renderFont(
                 ctx,
                 "   CUR SURVI",
                 MENU_FONT_SIZE,
                 ~~(WIDTH / 5) + 15,
-                ~~(HEIGHT / 3),
+                titleY,
             )
             ctx.fillStyle = RED
-            renderFont(
-                ctx,
-                "I",
-                MENU_FONT_SIZE,
-                ~~(WIDTH / 5) + 153,
-                ~~(HEIGHT / 3),
-            )
+            renderFont(ctx, "I", MENU_FONT_SIZE, ~~(WIDTH / 5) + 153, titleY)
             ctx.fillStyle = WHITE
-            renderFont(
-                ctx,
-                "VORS",
-                MENU_FONT_SIZE,
-                ~~(WIDTH / 5) + 165,
-                ~~(HEIGHT / 3),
-            )
+            renderFont(ctx, "VORS", MENU_FONT_SIZE, ~~(WIDTH / 5) + 165, titleY)
 
             if (buttonBlink) {
                 renderFont(

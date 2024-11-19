@@ -28,6 +28,7 @@ export const loadAssets = async () => {
         "./assets/rocks.png",
         "./assets/saber.png",
         "./assets/orb.png",
+        "./assets/title-bg.png",
     ]
     const assetsLoaded = urls.map(img)
 
@@ -49,6 +50,7 @@ export const loadAssets = async () => {
         rocks,
         saber,
         orb,
+        titleBg,
     ] = await Promise.all(assetsLoaded)
 
     // included normal and flipped versions for asymmetric sprites
@@ -166,6 +168,7 @@ export const loadAssets = async () => {
             texture((ctx) => frame(ctx, rocks, 0, 0, 8, 0), 8, 8),
             texture((ctx) => frame(ctx, rocks, 0, 0, 8, 1), 8, 8),
         ],
+        titleBg,
     }
 }
 
