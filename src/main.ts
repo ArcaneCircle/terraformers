@@ -14,8 +14,15 @@ const canvas = document.getElementById("c") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")!
 const processInput = initInput(canvas, WIDTH, HEIGHT)
 
-loadSounds()
 ;(async () => {
+    ;(onresize = () => {
+        resize(canvas, WIDTH, HEIGHT)
+    })()
+
+    loadIntro()
+    renderUI(ctx, null)
+    loadSounds()
+
     await window.highscores.init({
         getAnnouncement: (name, result) => {
             const zeroPad = (numb) => (numb < 10 ? "0" + numb : numb)
@@ -29,15 +36,11 @@ loadSounds()
             return { score: 0, time: 0 }
         },
     })
-    ;(onresize = () => {
-        resize(canvas, WIDTH, HEIGHT)
-    })()
 
-    loadIntro()
-    renderUI(ctx, null)
-    console.log("loading assets...")
     const start = new Date()
+    console.log("loading assets...")
     const assets = await loadAssets()
+    console.log("done loading assets...")
     const toWait = 3e3 - (new Date() - start)
     if (toWait > 0) {
         await new Promise((res) => setTimeout(res, toWait))

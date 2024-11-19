@@ -6,6 +6,7 @@ export const JOYSTICK_SIZE = 30
 export const JOYSTICK_THUMB_SIZE = 10
 
 // ui
+export const APPNAME = "TERRAFORMERS"
 export const FONT_SIZE = 1
 export const MENU_FONT_SIZE = 3
 export const UI_BAR_WIDTH = WIDTH / 4

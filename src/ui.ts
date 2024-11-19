@@ -10,6 +10,7 @@ import {
     UI_TRANSITION_DURATION,
     WHITE,
     WIDTH,
+    APPNAME
 } from "./const"
 import { type CTX } from "./core/canvas"
 import { renderFont, renderFontTex } from "./core/font"
@@ -103,7 +104,7 @@ const btn = (
 
 const BTN_SIZE = 32
 const startBtn = btn(
-    ~~(WIDTH / 3) + 20,
+    ~~(WIDTH / 3) + 16,
     ~~(HEIGHT / 3) * 2,
     MENU_FONT_SIZE * 4 * 6,
     BTN_SIZE,
@@ -218,7 +219,7 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             ctx.fillStyle = WHITE
             renderFontTex(
                 ctx,
-                "XIICUR SURVIIVORS\nINITIAL CREATOR: SAUD WWW.SAUD.WTF\nWEBXDC PORT BY DELTAZEN\n\nLOADING...",
+                APPNAME+"\n\nBASED ON XIICUR SURVIIVORS BY WWW.SAUD.WTF\n\nLOADING...",
                 20,
                 20,
             )
@@ -226,7 +227,7 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
 
         // such a bespoke title rendering technique
         case Scene.title:
-            const titleY = 10
+            const titleY = 15
             const bgX = ~~((WIDTH - assets.titleBg.width) / 2)
             const bgY = ~~((HEIGHT - assets.titleBg.height) / 2)
             ctx.drawImage(assets.titleBg, bgX, bgY + titleY)
@@ -236,25 +237,19 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             ctx.fillStyle = BLACK1
             renderFont(
                 ctx,
-                "XIICUR SURVIIVORS",
+                APPNAME,
                 MENU_FONT_SIZE,
-                ~~(WIDTH / 5) + 2,
+                ~~(WIDTH / 3.6) + 1,
                 titleY + 2,
             )
-            ctx.fillStyle = RED
-            renderFont(ctx, "XII", MENU_FONT_SIZE, ~~(WIDTH / 5), titleY)
             ctx.fillStyle = WHITE
             renderFont(
                 ctx,
-                "   CUR SURVI",
+                APPNAME,
                 MENU_FONT_SIZE,
-                ~~(WIDTH / 5) + 15,
+                ~~(WIDTH / 3.6) -1,
                 titleY,
             )
-            ctx.fillStyle = RED
-            renderFont(ctx, "I", MENU_FONT_SIZE, ~~(WIDTH / 5) + 153, titleY)
-            ctx.fillStyle = WHITE
-            renderFont(ctx, "VORS", MENU_FONT_SIZE, ~~(WIDTH / 5) + 165, titleY)
 
             if (buttonBlink) {
                 renderFont(
