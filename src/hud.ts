@@ -38,23 +38,35 @@ export const loadHud = () => {
 
     unloadRender = addRenderComp((ctx, assets) => {
         // stage light
-        ctx.fillStyle = BLACK0 + "84"
-        ctx.beginPath()
-        ctx.arc(hero.x - cam.x, hero.y - cam.y, 130, 0, Math.PI * 2)
-        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
-        ctx.fill()
-        ctx.fillStyle = BLACK0 + "64"
-        ctx.beginPath()
-        ctx.arc(hero.x - cam.x, hero.y - cam.y, 120, 0, Math.PI * 2)
-        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
-        ctx.fill()
         ctx.fillStyle = BLACK0 + "44"
         ctx.beginPath()
-        ctx.arc(hero.x - cam.x, hero.y - cam.y, 110, 0, Math.PI * 2)
+        ctx.arc(
+            hero.x - cam.x,
+            hero.y - cam.y,
+            stats.lightRadius + 20,
+            0,
+            Math.PI * 2,
+        )
         ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
         ctx.fill()
         ctx.beginPath()
-        ctx.arc(hero.x - cam.x, hero.y - cam.y, 100, 0, Math.PI * 2)
+        ctx.arc(
+            hero.x - cam.x,
+            hero.y - cam.y,
+            stats.lightRadius + 10,
+            0,
+            Math.PI * 2,
+        )
+        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
+        ctx.fill()
+        ctx.beginPath()
+        ctx.arc(
+            hero.x - cam.x,
+            hero.y - cam.y,
+            stats.lightRadius,
+            0,
+            Math.PI * 2,
+        )
         ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
         ctx.fill()
 

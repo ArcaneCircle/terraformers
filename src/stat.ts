@@ -21,6 +21,7 @@ import {
     INIT_HEALTH_CAP,
     INIT_HERO_SPEED,
     INIT_LEVEL_XP,
+    INIT_LIGHT_RADIUS,
     INIT_ORBS_DMG,
     INIT_ORBS_RADIUS,
     INIT_PICKUP_RADIUS,
@@ -265,6 +266,7 @@ export const stats = {
     xp: 0,
     levelXp: 0,
     speed: 0,
+    lightRadius: 0,
 
     bulletDmg: 0,
     bulletRate: 0,
@@ -294,6 +296,7 @@ export const resetStats = () => {
     stats.xp = 0
     stats.levelXp = INIT_LEVEL_XP
     stats.speed = INIT_HERO_SPEED
+    stats.lightRadius = INIT_LIGHT_RADIUS
 
     stats.bulletDmg = INIT_BULLET_DMG
     stats.bulletRate = INIT_BULLET_FIRE_RATE

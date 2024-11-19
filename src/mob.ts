@@ -621,7 +621,15 @@ export const nearestMobPos = () => {
             id = mobid
         }
     })
-    if (id !== undefined && isNearHero(E.x[id], E.y[id], MOB_SIZE, MOB_SIZE)) {
+    if (
+        id !== undefined &&
+        distance(
+            hero.x,
+            hero.y,
+            E.x[id] + MOB_SIZE / 2,
+            E.y[id] + MOB_SIZE / 2,
+        ) < stats.lightRadius
+    ) {
         return { x: E.x[id], y: E.y[id] }
     }
 }
