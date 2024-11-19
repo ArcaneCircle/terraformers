@@ -404,7 +404,6 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             if (buttonBlink) {
                 renderFontTex(ctx, "RESTART", startBtn.x + 10, startBtn.y + 10)
             }
-            window.highscores.setScore({ score: stats.score, time: stats.time })
             break
     }
 }

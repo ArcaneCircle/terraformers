@@ -8,7 +8,7 @@ import { loadHud, unloadHud } from "./hud"
 import { loadMob, unloadMob } from "./mob"
 import { Observable } from "./observables"
 import { playTheme, stopTheme } from "./sound"
-import { resetStats } from "./stat"
+import { resetStats, stats } from "./stat"
 import { loadText, unloadText } from "./text"
 import { loadWeapon, unloadWeapon } from "./weapon"
 
@@ -87,6 +87,7 @@ export const prerpareDeathScene = () => {
     unloadCam()
     stopTheme()
     obsEmit(Observable.scene, scene)
+    window.highscores.setScore({ score: stats.score, time: stats.time })
 }
 
 export const resumeGame = () => {
