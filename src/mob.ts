@@ -82,7 +82,7 @@ const sec = ticker(1000)
 const sec2 = ticker(500)
 const sec4 = ticker(250)
 const secf = ticker(100)
-const endGameAnim = ticker(7e3)
+const endGameAnim = ticker(3e3)
 
 const frames = [0, 1, 2, 1]
 const maxFrames = frames.length
@@ -126,6 +126,239 @@ const _vec = { x: 0, y: 0 }
 let unloadPhysics: () => void
 let unloadRender: () => void
 
+const waves = {
+    1: (dt) => {
+        const time = stats.time - stats.waveStartTime
+        if (time < 30) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1)
+            } else if (sec.tick(dt)) {
+                spawnMob(MobType.mob0)
+            }
+        } else if (time < 60) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob0)
+            }
+        } else if (time < 90) {
+            if (sec.tick(dt)) {
+                spawnMob(MobType.mob0)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1boss)
+            } else if (tsec.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+        } else if (time < 120) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob0)
+            }
+            if (sec.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+        } else if (time < 180) {
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob0)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+        } else if (!hasMobs()) {
+            stats.wave = 2
+            stats.waveStartTime = stats.time
+        }
+    },
+    2: (dt) => {
+        const time = stats.time - stats.waveStartTime
+        if (time < 60) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob1boss)
+            } else if (sec4.tick(dt)) {
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob1)
+            }
+        } else if (time < 90) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0boss)
+            } else if (secf.tick(dt)) {
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
+            }
+        } else if (time < 120) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob1boss)
+            } else if (secf.tick(dt)) {
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
+            }
+        } else if (time < 150) {
+            if (sec2.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob2boss)
+            } else if (tsec.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+        } else if (time < 180) {
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob2boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob2)
+            }
+        } else if (!hasMobs()) {
+            stats.wave = 3
+            stats.waveStartTime = stats.time
+        }
+    },
+    3: (dt) => {
+        const time = stats.time - stats.waveStartTime
+        if (time < 60) {
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob1)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob2boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+        } else if (time < 120) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob2boss)
+            } else if (secf.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+        } else if (time < 180) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob1boss)
+            } else if (secf.tick(dt)) {
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
+            }
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+        } else if (!hasMobs()) {
+            stats.wave = 4
+            stats.waveStartTime = stats.time
+        }
+    },
+    4: (dt) => {
+        const time = stats.time - stats.waveStartTime
+        if (time < 60) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob1boss)
+                spawnMob(MobType.mob2boss)
+            } else if (secf.tick(dt)) {
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob2)
+            }
+        } else if (time < 90) {
+            if (secf.tick(dt)) {
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob2)
+            }
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob3boss)
+            } else if (sec.tick(dt)) {
+                spawnMob(MobType.mob3)
+            }
+        } else if (time < 120) {
+            if (sec2.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob3boss)
+                spawnMob(MobType.mob0boss)
+            } else if (sec.tick(dt)) {
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob0boss)
+            }
+        } else if (time < 150) {
+            if (fiveSec.tick(dt)) {
+                spawnMob(MobType.mob3boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob3)
+            }
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob2)
+            }
+        } else if (time < 180) {
+            if (tsec.tick(dt)) {
+                spawnMob(MobType.mob3boss)
+            } else if (sec4.tick(dt)) {
+                spawnMob(MobType.mob3)
+            }
+            if (sec2.tick(dt)) {
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1)
+            }
+        } else if (time < 210) {
+            if (sec4.tick(dt)) {
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1boss)
+            }
+            if (tsec.tick(dt)) {
+                spawnMob(MobType.mob3boss)
+                spawnMob(MobType.mob0boss)
+            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob0)
+            }
+        } else if (time < 240) {
+            if (secf.tick(dt)) {
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob3)
+                spawnMob(MobType.mob2)
+                spawnMob(MobType.mob1)
+                spawnMob(MobType.mob0boss)
+                spawnMob(MobType.mob0)
+                spawnMob(MobType.mob0)
+            }
+        } else if (!hasMobs()) {
+            if (!wavesEnded) {
+                stats.won = true
+                prerpareDeathScene()
+                wavesEnded = true
+            }
+            if (endGameAnim.tick(dt)) {
+                playStart()
+                endGame()
+            }
+        }
+    },
+}
+
+const hasMobs = () => {
+    let mobs = false
+    iterMobs(() => {
+        mobs = true
+        return true
+    })
+    return mobs
+}
+
 export const unloadMob = () => {
     unloadPhysics()
     unloadRender()
@@ -151,206 +384,7 @@ export const loadMob = () => {
 
     unloadPhysics = addPhysicsComp((dt) => {
         // mob spawn manager
-        if (stats.time < 30) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1)
-            } else if (sec.tick(dt)) {
-                spawnMob(MobType.mob0)
-            }
-        } else if (stats.time < 60) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob0)
-            }
-        } else if (stats.time < 90) {
-            if (sec.tick(dt)) {
-                spawnMob(MobType.mob0)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-            } else if (tsec.tick(dt)) {
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 120) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob0)
-            }
-            if (sec.tick(dt)) {
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 180) {
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob0)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 240) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob1boss)
-            } else if (sec4.tick(dt)) {
-                spawnMob(MobType.mob0)
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 270) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob0boss)
-            } else if (secf.tick(dt)) {
-                spawnMob(MobType.mob0)
-                spawnMob(MobType.mob0)
-                spawnMob(MobType.mob0)
-            }
-        } else if (stats.time < 300) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-                spawnMob(MobType.mob1boss)
-            } else if (secf.tick(dt)) {
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 330) {
-            if (sec2.tick(dt)) {
-                spawnMob(MobType.mob1)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob2boss)
-            } else if (tsec.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 360) {
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob1)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob2boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 420) {
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob0)
-                spawnMob(MobType.mob1)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob2boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 480) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob2boss)
-            } else if (secf.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 540) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-                spawnMob(MobType.mob1boss)
-            } else if (secf.tick(dt)) {
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob1)
-            }
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 600) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-                spawnMob(MobType.mob2boss)
-            } else if (secf.tick(dt)) {
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 630) {
-            if (secf.tick(dt)) {
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob2)
-            }
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob3boss)
-            } else if (sec.tick(dt)) {
-                spawnMob(MobType.mob3)
-            }
-        } else if (stats.time < 660) {
-            if (sec2.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob3boss)
-                spawnMob(MobType.mob0boss)
-            } else if (sec.tick(dt)) {
-                spawnMob(MobType.mob3)
-                spawnMob(MobType.mob0boss)
-            }
-        } else if (stats.time < 690) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob3boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob3)
-            }
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob2)
-            }
-        } else if (stats.time < 720) {
-            if (tsec.tick(dt)) {
-                spawnMob(MobType.mob3boss)
-            } else if (sec4.tick(dt)) {
-                spawnMob(MobType.mob3)
-            }
-            if (sec2.tick(dt)) {
-                spawnMob(MobType.mob2)
-                spawnMob(MobType.mob1)
-            }
-        } else if (stats.time < 750) {
-            if (sec4.tick(dt)) {
-                spawnMob(MobType.mob2)
-                spawnMob(MobType.mob1boss)
-            }
-            if (tsec.tick(dt)) {
-                spawnMob(MobType.mob3boss)
-                spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
-                spawnMob(MobType.mob3)
-                spawnMob(MobType.mob0)
-            }
-        } else if (stats.time < 780) {
-            if (secf.tick(dt)) {
-                spawnMob(MobType.mob3)
-                spawnMob(MobType.mob3)
-                spawnMob(MobType.mob2)
-                spawnMob(MobType.mob1)
-                spawnMob(MobType.mob0boss)
-                spawnMob(MobType.mob0)
-                spawnMob(MobType.mob0)
-            }
-        } else {
-            if (!wavesEnded) {
-                stats.won = true
-                prerpareDeathScene()
-                iterMobs((_x, _y, id) => {
-                    attackMob(id, 1000)
-                })
-                wavesEnded = true
-            }
-            if (endGameAnim.tick(dt)) {
-                playStart()
-                endGame()
-            }
-        }
+        waves[stats.wave](dt)
 
         // todo optimize out offscreen mobs?
         iterMobs(

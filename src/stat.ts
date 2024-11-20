@@ -261,6 +261,9 @@ export const stats = {
     score: 0,
     /** Time passed since game session start, in seconds */
     time: 0,
+    waveStartTime: 0,
+    wave: 0,
+
     health: 0,
     maxHealth: 0,
     xp: 0,
@@ -289,8 +292,9 @@ export const stats = {
 
 export const resetStats = () => {
     stats.won = false
+    stats.wave = 1
+    stats.waveStartTime = stats.time = 0
     stats.score = 0
-    stats.time = 0
     stats.health = INIT_HEALTH_CAP
     stats.maxHealth = INIT_HEALTH_CAP
     stats.xp = 0
