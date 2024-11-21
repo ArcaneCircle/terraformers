@@ -55,7 +55,7 @@ export const INIT_PICKUP_RADIUS = 20
 export const INC_PICKUP_RADIUS = 20
 export const MAX_PICKUP_RADIUS = 80
 
-export const INIT_LIGHT_RADIUS = 100
+export const INIT_LIGHT_RADIUS = 60
 
 export const MOB0_SPEED = 0.02
 export const MOB0_HEALTH = 10

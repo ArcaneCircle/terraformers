@@ -38,17 +38,19 @@ export const loadHud = () => {
 
     unloadRender = addRenderComp((ctx, assets) => {
         // stage light
-        ctx.fillStyle = BLACK0 + "44"
-        ctx.beginPath()
-        ctx.arc(
-            hero.x - cam.x,
-            hero.y - cam.y,
-            stats.lightRadius + 20,
-            0,
-            Math.PI * 2,
-        )
-        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
-        ctx.fill()
+        let transparency = "ee"
+        if (stats.lightRadius >= 100) {
+            transparency = "80"
+        } else if (stats.lightRadius >= 90) {
+            transparency = "aa"
+        } else if (stats.lightRadius >= 80) {
+            transparency = "bb"
+        } else if (stats.lightRadius >= 70) {
+            transparency = "cc"
+        } else if (stats.lightRadius > 60) {
+            transparency = "dd"
+        }
+        ctx.fillStyle = BLACK0 + transparency
         ctx.beginPath()
         ctx.arc(
             hero.x - cam.x,
@@ -59,6 +61,7 @@ export const loadHud = () => {
         )
         ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
         ctx.fill()
+        ctx.fillStyle = BLACK0 + "44"
         ctx.beginPath()
         ctx.arc(
             hero.x - cam.x,

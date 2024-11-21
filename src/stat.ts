@@ -165,9 +165,11 @@ export const usePowerup = (power: Powerup) => {
             break
         case Powerup.orbNum:
             stats.orbs += 1
+            stats.lightRadius += 3
             break
         case Powerup.orbRadius:
             stats.orbRadius += INC_ORBS_RADIUS
+            stats.lightRadius += 5
             break
         case Powerup.orbDamage:
             stats.orbsDmg += INC_ORBS_DMG
