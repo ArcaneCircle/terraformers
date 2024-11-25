@@ -2,7 +2,7 @@ import "@webxdc/highscores"
 import { loadAssets } from "./asset"
 import { CompPhysicsRun } from "./components/physics"
 import { CompRenderRun } from "./components/render"
-import { HEIGHT, WIDTH } from "./const"
+import { HEIGHT, WIDTH, DEBUG } from "./const"
 import { resize } from "./core/canvas"
 import { initInput } from "./core/input"
 import { loop } from "./core/loop"
@@ -42,7 +42,7 @@ const processInput = initInput(canvas, WIDTH, HEIGHT)
     const assets = await loadAssets()
     console.log("done loading assets...")
     const toWait = 3e3 - (new Date() - start)
-    if (toWait > 0) {
+    if (!DEBUG && toWait > 0) {
         await new Promise((res) => setTimeout(res, toWait))
     }
     loadTitle()
