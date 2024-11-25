@@ -174,6 +174,17 @@ export const updateUI = (dt: number) => {
     }
 }
 
+export const renderIntro = (ctx: CTX) => {
+    ctx.fillStyle = WHITE
+    renderFontTex(
+        ctx,
+        APPNAME +
+            "\n\nBASED ON XIICUR SURVIIVORS BY WWW.SAUD.WTF\n\nLOADING...",
+        20,
+        20,
+    )
+}
+
 export const renderUI = (ctx: CTX, assets: Assets) => {
     if (runTransition) {
         // normalized, 0 -> 1
@@ -210,14 +221,7 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
     }
     switch (scene) {
         case Scene.intro:
-            ctx.fillStyle = WHITE
-            renderFontTex(
-                ctx,
-                APPNAME +
-                    "\n\nBASED ON XIICUR SURVIIVORS BY WWW.SAUD.WTF\n\nLOADING...",
-                20,
-                20,
-            )
+            renderIntro(ctx)
             break
 
         // such a bespoke title rendering technique
@@ -307,21 +311,21 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
                 BTN_SIZE,
             )
             ctx.drawImage(
-                assets[upgrades[0].sprite],
+                assets[upgrades[0].sprite] as HTMLImageElement,
                 upgrade1btn.x,
                 upgrade1btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
-                assets[upgrades[1].sprite],
+                assets[upgrades[1].sprite] as HTMLImageElement,
                 upgrade2btn.x,
                 upgrade2btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
-                assets[upgrades[2].sprite],
+                assets[upgrades[2].sprite] as HTMLImageElement,
                 upgrade3btn.x,
                 upgrade3btn.y,
                 BTN_SIZE,

@@ -1,17 +1,20 @@
 import { Skill } from "src/skills/skill"
 import { Hero } from "src/heroes/hero"
+import { WavesKey } from "src/mob"
 
 import { Hero1 } from "./heroes/hero1"
 
-export const stats = {
-    won: false,
-    score: 0,
+class Stats {
+    won = false
+    score = 0
     /** Time passed since game session start, in seconds */
-    time: 0,
-    waveStartTime: 0,
-    wave: 0,
-    hero: null as Hero,
+    time = 0
+    waveStartTime = 0
+    wave: WavesKey = 1
+    hero!: Hero
 }
+
+export const stats = new Stats()
 
 export const resetStats = () => {
     stats.won = false

@@ -42,8 +42,8 @@ export class ThrowingLightsaber implements Skill {
     }
     saberFreePool: number[] = []
 
-    unloadPhysics: () => void
-    unloadRender: () => void
+    unloadPhysics = () => {}
+    unloadRender = () => {}
 
     owner: ProjectileOwner
 
@@ -52,7 +52,7 @@ export class ThrowingLightsaber implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eSaber"
+        const sprite = "eSaber" as keyof Assets
         const upgrades = []
 
         if (this.fireRate > MIN_SABER_FIRE_RATE) {

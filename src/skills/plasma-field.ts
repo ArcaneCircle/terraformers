@@ -35,8 +35,8 @@ export class PlasmaField implements Skill {
         y: Array(~~MAX_AURA_RADIUS).fill(0),
         age: Array(~~MAX_AURA_RADIUS).fill(0),
     }
-    unloadPhysics: () => void
-    unloadRender: () => void
+    unloadPhysics = () => {}
+    unloadRender = () => {}
 
     owner: PositionOwner
 
@@ -45,7 +45,7 @@ export class PlasmaField implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "ePlasma"
+        const sprite = "ePlasma" as keyof Assets
         const upgrades = []
 
         if (this.radius < MAX_AURA_RADIUS) {

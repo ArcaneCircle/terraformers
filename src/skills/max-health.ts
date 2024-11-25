@@ -1,3 +1,5 @@
+import { Assets } from "src/asset"
+import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
 
 const INC_HEALTH_CAP = 25
@@ -15,7 +17,7 @@ export class MaxHealth implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eHeart"
+        const sprite = "eHeart" as keyof Assets
         const upgrades = []
 
         if (this.owner.maxHealth < MAX_HEALTH_CAP) {

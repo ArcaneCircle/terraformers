@@ -1,3 +1,5 @@
+import { Assets } from "src/asset"
+import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
 
 const INC_OWNER_SPEED = 0.01
@@ -15,7 +17,7 @@ export class MovementSpeed implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eShoes"
+        const sprite = "eShoes" as keyof Assets
         const upgrades = []
 
         if (this.owner.speed < MAX_OWNER_SPEED) {

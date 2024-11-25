@@ -5,15 +5,16 @@
         "start": "vite --port 3000",
         "emulator": "concurrently \"npm start\" \"webxdc-dev run http://localhost:3000\"",
         "fix": "prettier --write .",
-        "check": "prettier --check .",
+        "check": "prettier --check . && tsc",
         "build": "vite build"
     },
     "devDependencies": {
+        "@webxdc/vite-plugins": "latest",
+        "@webxdc/webxdc-dev": "latest",
         "concurrently": "^9.0.1",
         "prettier": "^3.3.3",
-        "vite": "^5.3.3",
-        "@webxdc/webxdc-dev": "latest",
-        "@webxdc/vite-plugins": "latest"
+        "typescript": "^5.7.2",
+        "vite": "^5.3.3"
     },
     "dependencies": {
         "@webxdc/highscores": "^5.2.1"

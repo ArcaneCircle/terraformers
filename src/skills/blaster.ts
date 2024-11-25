@@ -23,11 +23,20 @@ const BULLET_SPEED = 0.2
 const BULLET_AGE = 3e3
 const SIZE = 8
 
+interface BlasterAttrs {
+    owner: ProjectileOwner
+    enabled?: boolean
+    dmg?: number
+    fireRate?: number
+}
+
 export class Blaster implements Skill {
-    enabled = false
-    dmg = INIT_BULLET_DMG
-    fireRate = INIT_BULLET_FIRE_RATE
-    fireRateTicker = ticker(INIT_BULLET_FIRE_RATE)
+    enabled: boolean
+    dmg: number
+    fireRate: number
+    owner: ProjectileOwner
+
+    fireRateTicker: ReturnType<typeof ticker>
     bulletFreePool: number[] = []
     bullets = {
         x: [] as number[],
@@ -39,13 +48,20 @@ export class Blaster implements Skill {
         active: [] as boolean[],
     }
 
-    unloadPhysics: () => void
-    unloadRender: () => void
+    unloadPhysics = () => {}
+    unloadRender = () => {}
 
-    owner: ProjectileOwner
-
-    constructor(owner: ProjectileOwner) {
+    constructor({
+        owner,
+        enabled = false,
+        dmg = INIT_BULLET_DMG,
+        fireRate = INIT_BULLET_FIRE_RATE,
+    }: BlasterAttrs) {
         this.owner = owner
+        this.enabled = enabled
+        this.dmg = dmg
+        this.fireRate = fireRate
+        this.fireRateTicker = ticker(fireRate)
     }
 
     upgradeFireRate() {
@@ -54,7 +70,7 @@ export class Blaster implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eBullet"
+        const sprite = "eBullet" as keyof Assets
         const upgrades = []
 
         if (this.fireRate > MIN_BULLET_FIRE_RATE) {

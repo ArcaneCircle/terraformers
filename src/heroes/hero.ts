@@ -1,4 +1,6 @@
 import { Skill } from "src/skills/skill"
+import { Upgrade } from "src/upgrade"
+import { Assets } from "src/asset"
 
 import { cam } from "../cam"
 import { addPhysicsComp } from "../components/physics"
@@ -39,11 +41,20 @@ export const enum State {
     dead,
 }
 
-export interface HeroAttrs {
-    x: number
-    y: number
-    state: State
-    sprite: string
+interface HeroAttrs {
+    sprite: keyof Assets
+    frames: { [key in State]: number[] }
+    health?: number
+    maxHealth?: number
+    xp?: number
+    levelXp?: number
+    speed?: number
+    lightRadius?: number
+    pickupRadius?: number
+}
+
+export abstract class Hero implements HeroAttrs {
+    sprite: keyof Assets
     frames: { [key in State]: number[] }
     health: number
     maxHealth: number
@@ -52,10 +63,7 @@ export interface HeroAttrs {
     speed: number
     lightRadius: number
     pickupRadius: number
-}
 
-interface Hero extends HeroAttrs {}
-export abstract class Hero {
     x = WIDTH / 2
     y = HEIGHT / 2
     state = State.idle
@@ -73,8 +81,8 @@ export abstract class Hero {
     s3000 = ticker(3e3)
 
     skills = [] as Skill[]
-    unloadPhysics: () => void
-    unloadRender: () => void
+    unloadPhysics = () => {}
+    unloadRender = () => {}
 
     constructor({
         health = INIT_HEALTH_CAP,
@@ -86,7 +94,7 @@ export abstract class Hero {
         pickupRadius = INIT_PICKUP_RADIUS,
         sprite,
         frames,
-    }: HeroAttrs = {}) {
+    }: HeroAttrs) {
         this.health = health
         this.maxHealth = maxHealth
         this.xp = xp
@@ -99,7 +107,7 @@ export abstract class Hero {
         this.maxFrames = frames[State.idle].length
     }
 
-    increaseXp(xp: number): bool {
+    increaseXp(xp: number): boolean {
         this.xp += xp
         if (this.xp >= this.levelXp) {
             this.xp -= this.levelXp
@@ -198,10 +206,9 @@ export abstract class Hero {
                 return
             }
             const dirOffset = this.flipped ? 5 : 0
-            const frame =
-                assets[this.sprite][
-                    this.frames[this.state][this.currentFrame] + dirOffset
-                ]
+            const frame = (assets[this.sprite] as HTMLCanvasElement[])[
+                this.frames[this.state][this.currentFrame] + dirOffset
+            ]
             if (this.state !== State.dead) {
                 ctx.drawImage(
                     frame,

@@ -1,4 +1,6 @@
-import { Hero, HeroAttrs, State } from "./hero"
+import { Skill } from "src/skills/skill"
+import { Upgrade } from "src/upgrade"
+import { Hero, State } from "./hero"
 
 import { extractRandom } from "../core/math"
 import { PlasmaOrbs } from "../skills/plasma-orbs"
@@ -22,8 +24,7 @@ export class Hero1 extends Hero {
         super({ sprite: "hero1", frames })
 
         this.healSkill = new Heal(this)
-        const blaster = new Blaster(this)
-        blaster.enabled = true
+        const blaster = new Blaster({ owner: this, enabled: true })
         blaster.upgradeFireRate()
 
         this.skills = [

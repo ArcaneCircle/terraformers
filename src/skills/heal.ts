@@ -1,5 +1,8 @@
-import { clamp } from "../core/math"
+import { Assets } from "src/asset"
+import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
+
+import { clamp } from "../core/math"
 
 const HEAL_AMT = 10
 
@@ -16,6 +19,7 @@ export class Heal implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
+        const sprite = "eHeart" as keyof Assets
         const apply = () => {
             const hp = ~~((this.owner.maxHealth * HEAL_AMT) / 100)
             this.owner.health = clamp(
@@ -24,7 +28,7 @@ export class Heal implements Skill {
                 this.owner.maxHealth,
             )
         }
-        return [{ label: "HEAL", sprite: "eHeart", apply }]
+        return [{ label: "HEAL", sprite, apply }]
     }
 
     load() {}

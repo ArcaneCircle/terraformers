@@ -13,5 +13,5 @@ export interface PositionOwner {
 export interface ProjectileOwner {
     x: number
     y: number
-    nearestEnemy: () => { x: number; y: number }
+    nearestEnemy: () => { x: number; y: number } | undefined
 }

@@ -36,17 +36,17 @@ export class PlasmaOrbs implements Skill {
         charge: Array(MAX_ORBS_NUM).fill(0),
     }
 
-    unloadPhysics: () => void
-    unloadRender: () => void
+    unloadPhysics = () => {}
+    unloadRender = () => {}
 
-    owner: PositionOwner
+    owner: OrbsOwner
 
-    constructor(owner: PositionOwner) {
+    constructor(owner: OrbsOwner) {
         this.owner = owner
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eOrbs"
+        const sprite = "eOrbs" as keyof Assets
         const upgrades = []
         if (this.count < MAX_ORBS_NUM) {
             const apply = () => {

@@ -126,8 +126,10 @@ const _vec = { x: 0, y: 0 }
 let unloadPhysics: () => void
 let unloadRender: () => void
 
+export type WavesKey = keyof typeof waves
+
 const waves = {
-    1: (dt) => {
+    1: (dt: number) => {
         const time = stats.time - stats.waveStartTime
         if (time < 30) {
             if (sec.tick(dt)) {
@@ -174,7 +176,7 @@ const waves = {
             increaseWave()
         }
     },
-    2: (dt) => {
+    2: (dt: number) => {
         const time = stats.time - stats.waveStartTime
         if (time < 60) {
             if (fiveSec.tick(dt)) {
@@ -231,7 +233,7 @@ const waves = {
             increaseWave()
         }
     },
-    3: (dt) => {
+    3: (dt: number) => {
         const time = stats.time - stats.waveStartTime
         if (time < 60) {
             if (sec4.tick(dt)) {
@@ -267,7 +269,7 @@ const waves = {
             increaseWave()
         }
     },
-    4: (dt) => {
+    4: (dt: number) => {
         const time = stats.time - stats.waveStartTime
         if (time < 60) {
             if (fiveSec.tick(dt)) {
@@ -404,7 +406,7 @@ export const loadMob = () => {
     sec4.clear()
     wavesEnded = false
 
-    unloadPhysics = addPhysicsComp((dt) => {
+    unloadPhysics = addPhysicsComp((dt: number) => {
         // mob spawn manager
         waves[stats.wave](dt)
 

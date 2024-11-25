@@ -1,3 +1,4 @@
+// @ts-nocheck
 /**
  * ZzFX Music Renderer v2.0.3 by Keith Clark and Frank Force
  */

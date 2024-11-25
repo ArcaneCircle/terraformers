@@ -1,3 +1,5 @@
+import { Assets } from "src/asset"
+import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
 
 const INC_PICKUP_RADIUS = 10
@@ -15,7 +17,7 @@ export class Magnet implements Skill {
     }
 
     getUpgrades(): Upgrade[] {
-        const sprite = "eMagnet"
+        const sprite = "eMagnet" as keyof Assets
         const upgrades = []
 
         if (this.owner.pickupRadius < MAX_PICKUP_RADIUS) {

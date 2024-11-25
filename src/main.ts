@@ -1,5 +1,5 @@
 import "@webxdc/highscores"
-import { loadAssets } from "./asset"
+import { loadAssets, Assets } from "./asset"
 import { CompPhysicsRun } from "./components/physics"
 import { CompRenderRun } from "./components/render"
 import { HEIGHT, WIDTH, DEBUG } from "./const"
@@ -8,7 +8,7 @@ import { initInput } from "./core/input"
 import { loop } from "./core/loop"
 import { loadTitle, loadIntro } from "./scene"
 import { loadSounds } from "./sound"
-import { renderUI, updateUI } from "./ui"
+import { renderUI, updateUI, renderIntro } from "./ui"
 
 const canvas = document.getElementById("c") as HTMLCanvasElement
 const ctx = canvas.getContext("2d")!
@@ -20,18 +20,19 @@ const processInput = initInput(canvas, WIDTH, HEIGHT)
     })()
 
     loadIntro()
-    renderUI(ctx, null)
+    renderIntro(ctx)
     loadSounds()
 
     await window.highscores.init({
-        getAnnouncement: (name, result) => {
-            const zeroPad = (numb) => (numb < 10 ? "0" + numb : numb)
+        getAnnouncement: (name: string, result: Highscore) => {
+            const zeroPad = (numb: number) => (numb < 10 ? "0" + numb : numb)
             const abstime = ~~result.time
             const mins = zeroPad(~~(abstime / 60))
             const secs = zeroPad(abstime % 60)
             return `${name} scored ${result.score} in ${mins}:${secs}`
         },
-        compareScores: (score1, score2) => score1.score - score2.score,
+        compareScores: (score1: Highscore, score2: Highscore) =>
+            score1.score - score2.score,
         getInitialScore: () => {
             return { score: 0, time: 0 }
         },
@@ -41,7 +42,7 @@ const processInput = initInput(canvas, WIDTH, HEIGHT)
     console.log("loading assets...")
     const assets = await loadAssets()
     console.log("done loading assets...")
-    const toWait = 3e3 - (new Date() - start)
+    const toWait = 3e3 - (new Date().valueOf() - start.valueOf())
     if (!DEBUG && toWait > 0) {
         await new Promise((res) => setTimeout(res, toWait))
     }
