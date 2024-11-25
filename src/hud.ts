@@ -36,6 +36,8 @@ export const loadHud = () => {
     })
 
     unloadRender = addRenderComp((ctx, assets) => {
+        const PI2 = Math.PI * 2
+
         // stage light
         const lightRadius = stats.hero.lightRadius
         let transparency = "ee"
@@ -50,27 +52,17 @@ export const loadHud = () => {
         } else if (lightRadius > 60) {
             transparency = "dd"
         }
+        const centerX = stats.hero.x - cam.x
+        const centerY = stats.hero.y - cam.y
         ctx.fillStyle = BLACK0 + transparency
         ctx.beginPath()
-        ctx.arc(
-            stats.hero.x - cam.x,
-            stats.hero.y - cam.y,
-            lightRadius + 10,
-            0,
-            Math.PI * 2,
-        )
-        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
+        ctx.arc(centerX, centerY, lightRadius + 10, 0, PI2, false)
+        ctx.arc(centerX, centerY, WIDTH, 0, PI2, true)
         ctx.fill()
         ctx.fillStyle = BLACK0 + "44"
         ctx.beginPath()
-        ctx.arc(
-            stats.hero.x - cam.x,
-            stats.hero.y - cam.y,
-            lightRadius,
-            0,
-            Math.PI * 2,
-        )
-        ctx.rect(WIDTH, 0, -WIDTH, HEIGHT)
+        ctx.arc(centerX, centerY, lightRadius, 0, PI2, false)
+        ctx.arc(centerX, centerY, WIDTH, 0, PI2, true)
         ctx.fill()
 
         // bars fill
@@ -141,7 +133,7 @@ export const loadHud = () => {
                 keys.touchStartPos.y * HEIGHT,
                 JOYSTICK_SIZE,
                 0,
-                Math.PI * 2,
+                PI2,
             )
             ctx.closePath()
             ctx.fill()
@@ -152,7 +144,7 @@ export const loadHud = () => {
                 (keys.touchStartPos.y + keys.clampedTouchPos.y) * HEIGHT,
                 JOYSTICK_THUMB_SIZE,
                 0,
-                Math.PI * 2,
+                PI2,
             )
             ctx.closePath()
             ctx.fill()
