@@ -34,7 +34,6 @@ import {
 } from "./const"
 import { ticker } from "./core/interpolation"
 import { aabb, angleToVec, distance, limitMagnitude, rand } from "./core/math"
-import { hero, hitHero, isHittingHero, isNearHero } from "./hero"
 import { endGame, prerpareDeathScene } from "./scene"
 import { playHit, playStart } from "./sound"
 import { stats } from "./stat"
@@ -76,8 +75,9 @@ export const MOB_SIZE = 8
 const DMG_BLINK_ANIM_TIME = 200
 const center = MOB_SIZE / 2
 
+const tenSec = ticker(10000)
 const fiveSec = ticker(5000)
-const tsec = ticker(2000)
+const twoSec = ticker(2000)
 const sec = ticker(1000)
 const sec2 = ticker(500)
 const sec4 = ticker(250)
@@ -130,15 +130,14 @@ const waves = {
     1: (dt) => {
         const time = stats.time - stats.waveStartTime
         if (time < 30) {
-            if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1)
-            } else if (sec.tick(dt)) {
+            if (sec.tick(dt)) {
                 spawnMob(MobType.mob0)
             }
         } else if (time < 60) {
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
+                spawnMob(MobType.mob1)
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob0)
             }
         } else if (time < 90) {
@@ -146,14 +145,16 @@ const waves = {
                 spawnMob(MobType.mob0)
             }
             if (fiveSec.tick(dt)) {
-                spawnMob(MobType.mob1boss)
-            } else if (tsec.tick(dt)) {
+                spawnMob(MobType.mob0boss)
+            }
+            if (twoSec.tick(dt)) {
                 spawnMob(MobType.mob1)
             }
         } else if (time < 120) {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob0)
             }
             if (sec.tick(dt)) {
@@ -165,12 +166,12 @@ const waves = {
             }
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob1boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob1)
             }
         } else if (!hasMobs()) {
-            stats.wave = 2
-            stats.waveStartTime = stats.time
+            increaseWave()
         }
     },
     2: (dt) => {
@@ -179,7 +180,8 @@ const waves = {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob0boss)
                 spawnMob(MobType.mob1boss)
-            } else if (sec4.tick(dt)) {
+            }
+            if (sec4.tick(dt)) {
                 spawnMob(MobType.mob0)
                 spawnMob(MobType.mob1)
             }
@@ -188,7 +190,8 @@ const waves = {
                 spawnMob(MobType.mob0boss)
                 spawnMob(MobType.mob0boss)
                 spawnMob(MobType.mob0boss)
-            } else if (secf.tick(dt)) {
+            }
+            if (secf.tick(dt)) {
                 spawnMob(MobType.mob0)
                 spawnMob(MobType.mob0)
                 spawnMob(MobType.mob0)
@@ -197,7 +200,8 @@ const waves = {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob1boss)
                 spawnMob(MobType.mob1boss)
-            } else if (secf.tick(dt)) {
+            }
+            if (secf.tick(dt)) {
                 spawnMob(MobType.mob1)
                 spawnMob(MobType.mob1)
             }
@@ -207,7 +211,8 @@ const waves = {
             }
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob2boss)
-            } else if (tsec.tick(dt)) {
+            }
+            if (twoSec.tick(dt)) {
                 spawnMob(MobType.mob2)
             }
         } else if (time < 180) {
@@ -217,13 +222,13 @@ const waves = {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob0boss)
                 spawnMob(MobType.mob2boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob0boss)
                 spawnMob(MobType.mob2)
             }
         } else if (!hasMobs()) {
-            stats.wave = 3
-            stats.waveStartTime = stats.time
+            increaseWave()
         }
     },
     3: (dt) => {
@@ -235,20 +240,23 @@ const waves = {
             }
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob2boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob2)
             }
         } else if (time < 120) {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob2boss)
-            } else if (secf.tick(dt)) {
+            }
+            if (secf.tick(dt)) {
                 spawnMob(MobType.mob2)
             }
         } else if (time < 180) {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob1boss)
                 spawnMob(MobType.mob1boss)
-            } else if (secf.tick(dt)) {
+            }
+            if (secf.tick(dt)) {
                 spawnMob(MobType.mob1)
                 spawnMob(MobType.mob1)
             }
@@ -256,8 +264,7 @@ const waves = {
                 spawnMob(MobType.mob2)
             }
         } else if (!hasMobs()) {
-            stats.wave = 4
-            stats.waveStartTime = stats.time
+            increaseWave()
         }
     },
     4: (dt) => {
@@ -266,7 +273,8 @@ const waves = {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob1boss)
                 spawnMob(MobType.mob2boss)
-            } else if (secf.tick(dt)) {
+            }
+            if (secf.tick(dt)) {
                 spawnMob(MobType.mob1)
                 spawnMob(MobType.mob2)
             }
@@ -281,7 +289,8 @@ const waves = {
             }
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob3boss)
-            } else if (sec.tick(dt)) {
+            }
+            if (sec.tick(dt)) {
                 spawnMob(MobType.mob3)
             }
         } else if (time < 120) {
@@ -291,23 +300,26 @@ const waves = {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob3boss)
                 spawnMob(MobType.mob0boss)
-            } else if (sec.tick(dt)) {
+            }
+            if (sec.tick(dt)) {
                 spawnMob(MobType.mob3)
                 spawnMob(MobType.mob0boss)
             }
         } else if (time < 150) {
             if (fiveSec.tick(dt)) {
                 spawnMob(MobType.mob3boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob3)
             }
             if (sec4.tick(dt)) {
                 spawnMob(MobType.mob2)
             }
         } else if (time < 180) {
-            if (tsec.tick(dt)) {
+            if (twoSec.tick(dt)) {
                 spawnMob(MobType.mob3boss)
-            } else if (sec4.tick(dt)) {
+            }
+            if (sec4.tick(dt)) {
                 spawnMob(MobType.mob3)
             }
             if (sec2.tick(dt)) {
@@ -319,10 +331,11 @@ const waves = {
                 spawnMob(MobType.mob2)
                 spawnMob(MobType.mob1boss)
             }
-            if (tsec.tick(dt)) {
+            if (twoSec.tick(dt)) {
                 spawnMob(MobType.mob3boss)
                 spawnMob(MobType.mob0boss)
-            } else if (sec2.tick(dt)) {
+            }
+            if (sec2.tick(dt)) {
                 spawnMob(MobType.mob3)
                 spawnMob(MobType.mob0)
             }
@@ -351,12 +364,19 @@ const waves = {
 }
 
 const hasMobs = () => {
-    let mobs = false
-    iterMobs(() => {
-        mobs = true
-        return true
-    })
-    return mobs
+    return E.active.some((active) => active)
+}
+
+const getActiveMobsCount = () => {
+    return E.active.reduce((count, active) => count + (active ? 1 : 0), 0)
+}
+
+const increaseWave = () => {
+    stats.wave += 1
+    stats.waveStartTime = stats.time
+    tenSec.clear()
+    fiveSec.clear()
+    twoSec.clear()
 }
 
 export const unloadMob = () => {
@@ -376,7 +396,9 @@ export const loadMob = () => {
     E.type = []
     E.active = []
     freePool = []
-    tsec.clear()
+    tenSec.clear()
+    fiveSec.clear()
+    twoSec.clear()
     sec.clear()
     sec2.clear()
     sec4.clear()
@@ -390,7 +412,7 @@ export const loadMob = () => {
         iterMobs(
             (x, y, id, _flip, _near, _frame, _framet, type, _dmgTicker) => {
                 // check proximity to hero
-                E.near[id] = isNearHero(
+                E.near[id] = stats.hero.isNearHero(
                     x + center,
                     y + center,
                     MOB_SIZE,
@@ -401,14 +423,19 @@ export const loadMob = () => {
                 // todo: possible optimization: skip detection if hero is invulnerable
                 if (
                     E.near[id] &&
-                    isHittingHero(x + center, y + center, MOB_SIZE, MOB_SIZE)
+                    stats.hero.isHittingHero(
+                        x + center,
+                        y + center,
+                        MOB_SIZE,
+                        MOB_SIZE,
+                    )
                 ) {
-                    hitHero(attacks[type])
+                    stats.hero.hitHero(attacks[type])
                 } else {
                     // move towards hero
                     // note that we only move if not hitting hero
-                    _vec.x = hero.x - x
-                    _vec.y = hero.y - y
+                    _vec.x = stats.hero.x - x
+                    _vec.y = stats.hero.y - y
                     limitMagnitude(_vec)
                     const speed = speeds[type]
                     E.x[id] += _vec.x * speed * dt
@@ -534,8 +561,8 @@ export const loadMob = () => {
         //    ctx.strokeStyle = BLACK0
         //    ctx.beginPath()
         //    ctx.arc(
-        //        hero.x - cam.x,
-        //        hero.y - cam.y,
+        //        stats.hero.x - cam.x,
+        //        stats.hero.y - cam.y,
         //        SPAWN_RADIUS,
         //        0,
         //        Math.PI * 2,
@@ -548,8 +575,8 @@ export const loadMob = () => {
 /** returns mob index */
 const spawnMob = (type: MobType) => {
     const spawnPos = angleToVec(rand(0, Math.PI * 2))
-    spawnPos.x = spawnPos.x * SPAWN_RADIUS + hero.x
-    spawnPos.y = spawnPos.y * SPAWN_RADIUS + hero.y
+    spawnPos.x = spawnPos.x * SPAWN_RADIUS + stats.hero.x
+    spawnPos.y = spawnPos.y * SPAWN_RADIUS + stats.hero.y
     if (freePool.length > 0) {
         const i = freePool.pop()!
         E.x[i] = spawnPos.x
@@ -645,25 +672,17 @@ export const isHittingMob = (
 /**
  * This returns undefined if there are no mobs alive
  */
-export const nearestMobPos = () => {
-    let smallestDist = 1e3
+export const nearestMobPos = (x: number, y: number, maxDist: number = 1e3) => {
+    let smallestDist = maxDist
     let id: number | undefined = undefined
     iterMobs((mobx, moby, mobid) => {
-        const dist = distance(hero.x, hero.y, mobx, moby)
+        const dist = distance(x, y, mobx, moby)
         if (dist < smallestDist) {
             smallestDist = dist
             id = mobid
         }
     })
-    if (
-        id !== undefined &&
-        distance(
-            hero.x,
-            hero.y,
-            E.x[id] + MOB_SIZE / 2,
-            E.y[id] + MOB_SIZE / 2,
-        ) < stats.lightRadius
-    ) {
+    if (id !== undefined) {
         return { x: E.x[id], y: E.y[id] }
     }
 }

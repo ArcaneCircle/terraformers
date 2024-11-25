@@ -17,7 +17,6 @@ import {
 } from "./const"
 import { renderFontTex } from "./core/font"
 import { keys } from "./core/input"
-import { hero } from "./hero"
 import { stats } from "./stat"
 
 let unloadPhysics: () => void
@@ -38,24 +37,25 @@ export const loadHud = () => {
 
     unloadRender = addRenderComp((ctx, assets) => {
         // stage light
+        const lightRadius = stats.hero.lightRadius
         let transparency = "ee"
-        if (stats.lightRadius >= 100) {
+        if (lightRadius >= 100) {
             transparency = "80"
-        } else if (stats.lightRadius >= 90) {
+        } else if (lightRadius >= 90) {
             transparency = "aa"
-        } else if (stats.lightRadius >= 80) {
+        } else if (lightRadius >= 80) {
             transparency = "bb"
-        } else if (stats.lightRadius >= 70) {
+        } else if (lightRadius >= 70) {
             transparency = "cc"
-        } else if (stats.lightRadius > 60) {
+        } else if (lightRadius > 60) {
             transparency = "dd"
         }
         ctx.fillStyle = BLACK0 + transparency
         ctx.beginPath()
         ctx.arc(
-            hero.x - cam.x,
-            hero.y - cam.y,
-            stats.lightRadius + 10,
+            stats.hero.x - cam.x,
+            stats.hero.y - cam.y,
+            lightRadius + 10,
             0,
             Math.PI * 2,
         )
@@ -64,9 +64,9 @@ export const loadHud = () => {
         ctx.fillStyle = BLACK0 + "44"
         ctx.beginPath()
         ctx.arc(
-            hero.x - cam.x,
-            hero.y - cam.y,
-            stats.lightRadius,
+            stats.hero.x - cam.x,
+            stats.hero.y - cam.y,
+            lightRadius,
             0,
             Math.PI * 2,
         )
@@ -78,12 +78,12 @@ export const loadHud = () => {
         ctx.fillRect(
             UI_BAR_X + element_offset,
             UI_BAR_Y,
-            ~~(UI_BAR_WIDTH * (stats.health / stats.maxHealth)),
+            ~~(UI_BAR_WIDTH * (stats.hero.health / stats.hero.maxHealth)),
             UI_BAR_HEIGHT,
         )
         renderFontTex(
             ctx,
-            stats.health + "/" + stats.maxHealth,
+            stats.hero.health + "/" + stats.hero.maxHealth,
             UI_BAR_X + element_offset + 1,
             UI_BAR_Y + 1,
         )
@@ -93,12 +93,12 @@ export const loadHud = () => {
         ctx.fillRect(
             UI_BAR_X + element_offset,
             blueY,
-            ~~(UI_BAR_WIDTH * (stats.xp / stats.levelXp)),
+            ~~(UI_BAR_WIDTH * (stats.hero.xp / stats.hero.levelXp)),
             UI_BAR_HEIGHT,
         )
         renderFontTex(
             ctx,
-            stats.xp + "/" + stats.levelXp,
+            stats.hero.xp + "/" + stats.hero.levelXp,
             UI_BAR_X + element_offset + 1,
             blueY + 1,
         )

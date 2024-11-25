@@ -1,11 +1,10 @@
 import { cam } from "./cam"
 import { addPhysicsComp } from "./components/physics"
 import { addRenderComp } from "./components/render"
-import { COIN_PICKUP_SPEED } from "./const"
+import { COIN_PICKUP_SPEED, COIN_XP } from "./const"
 import { distance, limitMagnitude } from "./core/math"
-import { hero, isHittingHero } from "./hero"
 import { playPickup } from "./sound"
-import { increaseXp, stats } from "./stat"
+import { stats } from "./stat"
 
 const E = {
     x: [] as number[],
@@ -40,18 +39,25 @@ export const loadCoin = () => {
     unloadPhysics = addPhysicsComp((dt) => {
         iterCoins((x, y, id) => {
             // move to hero if near
-            const dist = distance(x, y, hero.x, hero.y)
-            if (dist < stats.pickupRadius) {
-                _vec.x = hero.x - x
-                _vec.y = hero.y - y
+            const dist = distance(x, y, stats.hero.x, stats.hero.y)
+            if (dist < stats.hero.pickupRadius) {
+                _vec.x = stats.hero.x - x
+                _vec.y = stats.hero.y - y
                 limitMagnitude(_vec)
                 E.x[id] += _vec.x * dt * COIN_PICKUP_SPEED
                 E.y[id] += _vec.y * dt * COIN_PICKUP_SPEED
             }
 
             // check if picked
-            if (isHittingHero(E.x[id] - center, E.y[id] - center, SIZE, SIZE)) {
-                increaseXp()
+            if (
+                stats.hero.isHittingHero(
+                    E.x[id] - center,
+                    E.y[id] - center,
+                    SIZE,
+                    SIZE,
+                )
+            ) {
+                stats.hero.increaseXp(COIN_XP)
                 playPickupSound = true
                 E.active[id] = false
                 freePool.push(id)

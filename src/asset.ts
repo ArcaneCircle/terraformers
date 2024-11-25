@@ -33,7 +33,7 @@ export const loadAssets = async () => {
     const assetsLoaded = urls.map(img)
 
     const [
-        hero,
+        hero1,
 
         mob0,
         mob1,
@@ -57,19 +57,19 @@ export const loadAssets = async () => {
     // note: make sure spritesheet frames are always in 1 row
     return {
         coin,
-        hero: [
+        hero1: [
             // normal
-            texture((ctx) => frame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => frame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => frame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => frame(ctx, hero, 0, 0, 16, 1), 16, 16),
-            texture((ctx) => frame(ctx, hero, 0, 0, 16, 2), 16, 16),
+            texture((ctx) => frame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => frame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => frame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => frame(ctx, hero1, 0, 0, 16, 1), 16, 16),
+            texture((ctx) => frame(ctx, hero1, 0, 0, 16, 2), 16, 16),
             // flipped
-            texture((ctx) => flipFrame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => flipFrame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => flipFrame(ctx, hero, 0, 0, 16, 0), 16, 16),
-            texture((ctx) => flipFrame(ctx, hero, 0, 0, 16, 1), 16, 16),
-            texture((ctx) => flipFrame(ctx, hero, 0, 0, 16, 2), 16, 16),
+            texture((ctx) => flipFrame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => flipFrame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => flipFrame(ctx, hero1, 0, 0, 16, 0), 16, 16),
+            texture((ctx) => flipFrame(ctx, hero1, 0, 0, 16, 1), 16, 16),
+            texture((ctx) => flipFrame(ctx, hero1, 0, 0, 16, 2), 16, 16),
         ],
         mob0: [
             // normal

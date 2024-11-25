@@ -3,14 +3,12 @@ import { loadCoin, unloadCoin } from "./coin"
 import { physicsPause } from "./components/physics"
 import { obsEmit, obsStart } from "./core/observer"
 import { loadFloor, unloadFloor } from "./floor"
-import { loadHero, unloadHero } from "./hero"
 import { loadHud, unloadHud } from "./hud"
 import { loadMob, unloadMob } from "./mob"
 import { Observable } from "./observables"
 import { playTheme, stopTheme } from "./sound"
 import { resetStats, stats } from "./stat"
 import { loadText, unloadText } from "./text"
-import { loadWeapon, unloadWeapon } from "./weapon"
 
 export const enum Scene {
     intro,
@@ -29,8 +27,7 @@ const unloadGameEntities = () => {
         unloadFloor()
         unloadMob()
         unloadCoin()
-        unloadHero()
-        unloadWeapon()
+        stats.hero.unload()
         unloadHud()
         unloadText()
     }
@@ -40,10 +37,9 @@ const loadGameEntities = () => {
     // order matters
     loadCam()
     loadFloor()
-    loadHero()
+    stats.hero.load()
     loadCoin()
     loadMob()
-    loadWeapon()
     loadText()
     loadHud()
 }
@@ -61,10 +57,10 @@ export const loadTitle = () => {
 }
 
 export const startGame = () => {
+    resetStats()
     loadGameEntities()
     scene = Scene.gameplay
     obsEmit(Observable.scene, scene)
-    resetStats()
     playTheme()
 }
 
@@ -83,7 +79,7 @@ export const powerupMenu = () => {
 
 export const prerpareDeathScene = () => {
     unloadHud()
-    unloadWeapon()
+    stats.hero.unloadSkills()
     unloadCam()
     stopTheme()
     obsEmit(Observable.scene, scene)

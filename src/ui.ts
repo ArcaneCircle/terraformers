@@ -20,20 +20,14 @@ import { clamp, lerp, pointInRect } from "./core/math"
 import { obsListen } from "./core/observer"
 import { Observable } from "./observables"
 import { loadTitle, resumeGame, Scene, startGame } from "./scene"
-import {
-    Powerup,
-    powerupSprite,
-    powerupText,
-    randomPowerups,
-    stats,
-    usePowerup,
-} from "./stat"
+import { stats } from "./stat"
+import { Upgrade } from "./upgrade"
 
-type PowerupId = 0 | 1 | 2
-let hoveredPowerup: PowerupId = 0
-const powerups: Powerup[] = []
-const selectPowerup = (id: PowerupId) => () => {
-    usePowerup(powerups[id])
+type UpgradeId = 0 | 1 | 2
+let hoveredUpgrade: UpgradeId = 0
+const upgrades: Upgrade[] = []
+const selectUpgrade = (id: UpgradeId) => () => {
+    upgrades[id].apply()
     resumeGame()
 }
 
@@ -55,8 +49,8 @@ obsListen(Observable.scene, (next: Scene) => {
         runTransition = true
     }
     if (next === Scene.powerup) {
-        powerups.splice(0)
-        powerups.push(...randomPowerups())
+        upgrades.splice(0)
+        upgrades.push(...stats.hero.getUpgrades())
     }
     prevScene = scene
     scene = next
@@ -110,26 +104,26 @@ const startBtn = btn(
     BTN_SIZE,
     startGame,
 )
-const powerup1btn = btn(
+const upgrade1btn = btn(
     ~~(WIDTH / 7) * 1,
     ~~(HEIGHT / 2) - 10,
     BTN_SIZE,
     BTN_SIZE,
-    selectPowerup(0),
+    selectUpgrade(0),
 )
-const powerup2btn = btn(
+const upgrade2btn = btn(
     ~~(WIDTH / 7) * 3,
     ~~(HEIGHT / 2) - 10,
     BTN_SIZE,
     BTN_SIZE,
-    selectPowerup(1),
+    selectUpgrade(1),
 )
-const powerup3btn = btn(
+const upgrade3btn = btn(
     ~~(WIDTH / 7) * 5,
     ~~(HEIGHT / 2) - 10,
     BTN_SIZE,
     BTN_SIZE,
-    selectPowerup(2),
+    selectUpgrade(2),
 )
 
 export const updateUI = (dt: number) => {
@@ -143,31 +137,31 @@ export const updateUI = (dt: number) => {
             startBtn.update()
             break
         case Scene.powerup:
-            powerup1btn.update()
-            powerup2btn.update()
-            powerup3btn.update()
-            hoveredPowerup = powerup1btn.hovered
+            upgrade1btn.update()
+            upgrade2btn.update()
+            upgrade3btn.update()
+            hoveredUpgrade = upgrade1btn.hovered
                 ? 0
-                : powerup2btn.hovered
+                : upgrade2btn.hovered
                   ? 1
-                  : powerup3btn.hovered
+                  : upgrade3btn.hovered
                     ? 2
-                    : hoveredPowerup
+                    : hoveredUpgrade
             if (keys.btnp.rt) {
-                hoveredPowerup = clamp(hoveredPowerup + 1, 0, 2) as PowerupId
+                hoveredUpgrade = clamp(hoveredUpgrade + 1, 0, 2) as UpgradeId
             }
             if (keys.btnp.lf) {
-                hoveredPowerup = clamp(hoveredPowerup - 1, 0, 2) as PowerupId
+                hoveredUpgrade = clamp(hoveredUpgrade - 1, 0, 2) as UpgradeId
             }
             if (keys.btnp.spc) {
-                if (hoveredPowerup === 0) {
-                    powerup1btn.click()
+                if (hoveredUpgrade === 0) {
+                    upgrade1btn.click()
                 }
-                if (hoveredPowerup === 1) {
-                    powerup2btn.click()
+                if (hoveredUpgrade === 1) {
+                    upgrade2btn.click()
                 }
-                if (hoveredPowerup === 2) {
-                    powerup3btn.click()
+                if (hoveredUpgrade === 2) {
+                    upgrade3btn.click()
                 }
             }
             break
@@ -282,54 +276,54 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
 
             //if (DEBUG) {
             //    ctx.fillStyle = GREY
-            //    powerup1btn.render(ctx)
+            //    upgrade1btn.render(ctx)
             //    ctx.fillStyle = GREY
-            //    powerup2btn.render(ctx)
+            //    upgrade2btn.render(ctx)
             //    ctx.fillStyle = GREY
-            //    powerup3btn.render(ctx)
+            //    upgrade3btn.render(ctx)
             //}
 
             // icons
             ctx.imageSmoothingEnabled = false
             ctx.drawImage(
                 assets.eBg,
-                powerup1btn.x,
-                powerup1btn.y,
+                upgrade1btn.x,
+                upgrade1btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
                 assets.eBg,
-                powerup2btn.x,
-                powerup2btn.y,
+                upgrade2btn.x,
+                upgrade2btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
                 assets.eBg,
-                powerup3btn.x,
-                powerup3btn.y,
+                upgrade3btn.x,
+                upgrade3btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
-                powerupSprite(powerups[0], assets),
-                powerup1btn.x,
-                powerup1btn.y,
+                assets[upgrades[0].sprite],
+                upgrade1btn.x,
+                upgrade1btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
-                powerupSprite(powerups[1], assets),
-                powerup2btn.x,
-                powerup2btn.y,
+                assets[upgrades[1].sprite],
+                upgrade2btn.x,
+                upgrade2btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
-                powerupSprite(powerups[2], assets),
-                powerup3btn.x,
-                powerup3btn.y,
+                assets[upgrades[2].sprite],
+                upgrade3btn.x,
+                upgrade3btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
@@ -338,35 +332,35 @@ export const renderUI = (ctx: CTX, assets: Assets) => {
             ctx.fillStyle = WHITE
             renderFontTex(
                 ctx,
-                powerupText(powerups[0]),
-                powerup1btn.x,
-                powerup1btn.y + BTN_SIZE + 5,
+                upgrades[0].label,
+                upgrade1btn.x,
+                upgrade1btn.y + BTN_SIZE + 5,
             )
             renderFontTex(
                 ctx,
-                powerupText(powerups[1]),
-                powerup2btn.x,
-                powerup2btn.y + BTN_SIZE + 5,
+                upgrades[1].label,
+                upgrade2btn.x,
+                upgrade2btn.y + BTN_SIZE + 5,
             )
             renderFontTex(
                 ctx,
-                powerupText(powerups[2]),
-                powerup3btn.x,
-                powerup3btn.y + BTN_SIZE + 5,
+                upgrades[2].label,
+                upgrade3btn.x,
+                upgrade3btn.y + BTN_SIZE + 5,
             )
 
             // highlight selected
             ctx.strokeStyle = WHITE
             ctx.strokeRect(
-                ~~(WIDTH / 7) * (hoveredPowerup * 2 + 1),
-                powerup1btn.y,
+                ~~(WIDTH / 7) * (hoveredUpgrade * 2 + 1),
+                upgrade1btn.y,
                 BTN_SIZE,
                 BTN_SIZE,
             )
             ctx.drawImage(
                 assets.eArrow,
-                ~~(WIDTH / 7) * (hoveredPowerup * 2 + 1) + 6,
-                powerup1btn.y + 48 + (buttonBlink ? 2 : 0),
+                ~~(WIDTH / 7) * (hoveredUpgrade * 2 + 1) + 6,
+                upgrade1btn.y + 48 + (buttonBlink ? 2 : 0),
                 BTN_SIZE / 2,
                 BTN_SIZE / 2,
             )
