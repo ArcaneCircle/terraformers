@@ -23,7 +23,7 @@ const BULLET_SPEED = 0.2
 const BULLET_AGE = 3e3
 const SIZE = 8
 
-export class LaserGun implements Skill {
+export class Blaster implements Skill {
     enabled = false
     dmg = INIT_BULLET_DMG
     fireRate = INIT_BULLET_FIRE_RATE

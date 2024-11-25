@@ -4,7 +4,7 @@ import { extractRandom } from "../core/math"
 import { PlasmaOrbs } from "../skills/plasma-orbs"
 import { PlasmaField } from "../skills/plasma-field"
 import { ThrowingLightsaber } from "../skills/throwing-lightsaber"
-import { LaserGun } from "../skills/laser-gun"
+import { Blaster } from "../skills/blaster"
 import { Magnet } from "../skills/magnet"
 import { MovementSpeed } from "../skills/movement-speed"
 import { MaxHealth } from "../skills/max-health"
@@ -22,9 +22,9 @@ export class Hero1 extends Hero {
         super({ sprite: "hero1", frames })
 
         this.healSkill = new Heal(this)
-        const gun = new LaserGun(this)
-        gun.enabled = true
-        gun.upgradeFireRate()
+        const blaster = new Blaster(this)
+        blaster.enabled = true
+        blaster.upgradeFireRate()
 
         this.skills = [
             this.healSkill,
@@ -32,7 +32,7 @@ export class Hero1 extends Hero {
             new MovementSpeed(this),
             new Magnet(this),
 
-            gun,
+            blaster,
             new ThrowingLightsaber(this),
             new PlasmaOrbs(this),
             new PlasmaField(this),
