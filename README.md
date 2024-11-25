@@ -72,9 +72,12 @@ git push origin v1.0.1
 
 -   This is a fork of [Xiicur Survivors](https://github.com/rottencandy/js13k2024) by [saud](https://github.com/rottencandy)
 -   [Zzfxm](https://github.com/keithclark/ZzFXM) for music
--   Hero sprite is a modification of: https://trevor-pupkin.itch.io/outer-buddies
--   mob inspiration: https://opengameart.org/content/frogatto-friends-npc-pack
--   mob inspiration: https://opengameart.org/content/super-dead-gunner-reaperbot-enemy
+
+### Art Assets
+
+-   hero1 sprite is a modification of: https://trevor-pupkin.itch.io/outer-buddies
+-   inspiration: https://opengameart.org/content/frogatto-friends-npc-pack
+-   inspiration: https://opengameart.org/content/super-dead-gunner-reaperbot-enemy
 -   app icon and title screen background by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-space-gunner-merc-redux-space-junkyard-environment
 -   mob3 was created by Emcee Flesher (CC-BY 4.0): https://opengameart.org/content/super-dead-gunner-batch-3
 -   some public domain mobs taken from: https://opengameart.org/content/16x16-fantasy-rpg-trash-mobs-animated
