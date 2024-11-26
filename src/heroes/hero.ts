@@ -41,29 +41,7 @@ export const enum State {
     dead,
 }
 
-interface HeroAttrs {
-    sprite: keyof Assets
-    frames: { [key in State]: number[] }
-    health?: number
-    maxHealth?: number
-    xp?: number
-    levelXp?: number
-    speed?: number
-    lightRadius?: number
-    pickupRadius?: number
-}
-
-export abstract class Hero implements HeroAttrs {
-    sprite: keyof Assets
-    frames: { [key in State]: number[] }
-    health: number
-    maxHealth: number
-    xp: number
-    levelXp: number
-    speed: number
-    lightRadius: number
-    pickupRadius: number
-
+export abstract class Hero {
     x = WIDTH / 2
     y = HEIGHT / 2
     state = State.idle
@@ -84,17 +62,17 @@ export abstract class Hero implements HeroAttrs {
     unloadPhysics = () => {}
     unloadRender = () => {}
 
-    constructor({
-        health = INIT_HEALTH_CAP,
-        maxHealth = INIT_HEALTH_CAP,
-        xp = 0,
-        levelXp = INIT_LEVEL_XP,
-        speed = INIT_HERO_SPEED,
-        lightRadius = INIT_LIGHT_RADIUS,
-        pickupRadius = INIT_PICKUP_RADIUS,
-        sprite,
-        frames,
-    }: HeroAttrs) {
+    constructor(
+        private sprite: keyof Assets,
+        private frames: { [key in State]: number[] },
+        public health = INIT_HEALTH_CAP,
+        public maxHealth = INIT_HEALTH_CAP,
+        public xp = 0,
+        public levelXp = INIT_LEVEL_XP,
+        public speed = INIT_HERO_SPEED,
+        public lightRadius = INIT_LIGHT_RADIUS,
+        public pickupRadius = INIT_PICKUP_RADIUS,
+    ) {
         this.health = health
         this.maxHealth = maxHealth
         this.xp = xp
@@ -128,7 +106,11 @@ export abstract class Hero implements HeroAttrs {
     }
 
     nearestEnemy() {
-        return nearestMobPos(this.x, this.y, this.lightRadius)
+        return nearestMobPos(
+            this.x,
+            this.y,
+            Math.max(this.lightRadius, stats.lightRadius),
+        )
     }
 
     isHittingHero(x: number, y: number, w: number, h: number) {

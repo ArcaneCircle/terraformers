@@ -21,10 +21,10 @@ export class Hero1 extends Hero {
             [State.moving]: [3, 0, 4, 0],
             [State.dead]: [0, 0, 0, 0],
         }
-        super({ sprite: "hero1", frames })
+        super("hero1", frames)
 
         this.healSkill = new Heal(this)
-        const blaster = new Blaster({ owner: this, enabled: true })
+        const blaster = new Blaster(this, true)
         blaster.upgradeFireRate()
 
         this.skills = [

@@ -10,9 +10,7 @@ interface MaxHealthOwner {
 }
 
 export class MaxHealth implements Skill {
-    owner: MaxHealthOwner
-
-    constructor(owner: MaxHealthOwner) {
+    constructor(private owner: MaxHealthOwner) {
         this.owner = owner
     }
 

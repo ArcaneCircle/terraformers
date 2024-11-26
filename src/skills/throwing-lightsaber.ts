@@ -45,9 +45,7 @@ export class ThrowingLightsaber implements Skill {
     unloadPhysics = () => {}
     unloadRender = () => {}
 
-    owner: ProjectileOwner
-
-    constructor(owner: ProjectileOwner) {
+    constructor(private owner: ProjectileOwner) {
         this.owner = owner
     }
 

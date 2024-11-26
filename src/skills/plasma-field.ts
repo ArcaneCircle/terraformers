@@ -27,9 +27,7 @@ const LGREEN = "#a2dcc7"
 
 export class PlasmaField implements Skill {
     radius = 0
-    dmg = INIT_AURA_DAMAGE
-    dmgRate = INIT_AURA_DAMAGE_RATE
-    dmgRateTicker = ticker(INIT_AURA_DAMAGE_RATE)
+    dmgRateTicker: ReturnType<typeof ticker>
     particles = {
         x: Array(~~MAX_AURA_RADIUS).fill(0),
         y: Array(~~MAX_AURA_RADIUS).fill(0),
@@ -38,10 +36,15 @@ export class PlasmaField implements Skill {
     unloadPhysics = () => {}
     unloadRender = () => {}
 
-    owner: PositionOwner
-
-    constructor(owner: PositionOwner) {
+    constructor(
+        private owner: PositionOwner,
+        private dmg = INIT_AURA_DAMAGE,
+        private dmgRate = INIT_AURA_DAMAGE_RATE,
+    ) {
         this.owner = owner
+        this.dmg = dmg
+        this.dmgRate = dmgRate
+        this.dmgRateTicker = ticker(dmgRate)
     }
 
     getUpgrades(): Upgrade[] {

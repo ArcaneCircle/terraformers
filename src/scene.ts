@@ -7,7 +7,7 @@ import { loadHud, unloadHud } from "./hud"
 import { loadMob, unloadMob } from "./mob"
 import { Observable } from "./observables"
 import { playTheme, stopTheme } from "./sound"
-import { resetStats, stats } from "./stat"
+import { stats } from "./stat"
 import { loadText, unloadText } from "./text"
 
 export const enum Scene {
@@ -28,6 +28,7 @@ const unloadGameEntities = () => {
         unloadMob()
         unloadCoin()
         stats.hero.unload()
+        stats.unload()
         unloadHud()
         unloadText()
     }
@@ -42,6 +43,7 @@ const loadGameEntities = () => {
     loadMob()
     loadText()
     loadHud()
+    stats.load()
 }
 
 export const loadIntro = () => {
@@ -57,7 +59,7 @@ export const loadTitle = () => {
 }
 
 export const startGame = () => {
-    resetStats()
+    stats.reset()
     loadGameEntities()
     scene = Scene.gameplay
     obsEmit(Observable.scene, scene)
@@ -79,6 +81,7 @@ export const powerupMenu = () => {
 
 export const prerpareDeathScene = () => {
     unloadHud()
+    stats.unload()
     stats.hero.unloadSkills()
     unloadCam()
     stopTheme()

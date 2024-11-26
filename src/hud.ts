@@ -19,42 +19,23 @@ import { renderFontTex } from "./core/font"
 import { keys } from "./core/input"
 import { stats } from "./stat"
 
-let unloadPhysics: () => void
 let unloadRender: () => void
 
 export const unloadHud = () => {
-    unloadPhysics()
     unloadRender()
 }
 
 const element_offset = 8
 
 export const loadHud = () => {
-    unloadPhysics = addPhysicsComp((dt) => {
-        // this may not be the best place to update this
-        stats.time += dt / 1e3
-    })
-
     unloadRender = addRenderComp((ctx, assets) => {
         const PI2 = Math.PI * 2
 
         // stage light
-        const lightRadius = stats.hero.lightRadius
-        let transparency = "ee"
-        if (lightRadius >= 100) {
-            transparency = "80"
-        } else if (lightRadius >= 90) {
-            transparency = "aa"
-        } else if (lightRadius >= 80) {
-            transparency = "bb"
-        } else if (lightRadius >= 70) {
-            transparency = "cc"
-        } else if (lightRadius > 60) {
-            transparency = "dd"
-        }
+        const lightRadius = Math.max(stats.hero.lightRadius, stats.lightRadius)
         const centerX = stats.hero.x - cam.x
         const centerY = stats.hero.y - cam.y
-        ctx.fillStyle = BLACK0 + transparency
+        ctx.fillStyle = BLACK0 + stats.darkness.toString(16)
         ctx.beginPath()
         ctx.arc(centerX, centerY, lightRadius + 10, 0, PI2, false)
         ctx.arc(centerX, centerY, WIDTH, 0, PI2, true)
@@ -114,12 +95,12 @@ export const loadHud = () => {
         ctx.drawImage(assets.eXp, UI_BAR_X - 2, blueY - 1, 8, 8)
 
         // time
-        const abstime = ~~stats.time
-        const mins = ~~(abstime / 60)
-        const secs = abstime % 60
+        const zeroPad = (numb: number) => (numb < 10 ? "0" + numb : numb)
+        const hour = stats.hour
+        const mins = ~~(hour * 60) % 60
         renderFontTex(
             ctx,
-            mins + ":" + (secs < 10 ? "0" + secs : secs),
+            zeroPad(~~hour) + ":" + zeroPad(mins),
             ~~(WIDTH / 7) * 6,
             UI_BAR_Y,
         )

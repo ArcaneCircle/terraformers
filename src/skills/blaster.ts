@@ -23,19 +23,7 @@ const BULLET_SPEED = 0.2
 const BULLET_AGE = 3e3
 const SIZE = 8
 
-interface BlasterAttrs {
-    owner: ProjectileOwner
-    enabled?: boolean
-    dmg?: number
-    fireRate?: number
-}
-
 export class Blaster implements Skill {
-    enabled: boolean
-    dmg: number
-    fireRate: number
-    owner: ProjectileOwner
-
     fireRateTicker: ReturnType<typeof ticker>
     bulletFreePool: number[] = []
     bullets = {
@@ -51,12 +39,12 @@ export class Blaster implements Skill {
     unloadPhysics = () => {}
     unloadRender = () => {}
 
-    constructor({
-        owner,
-        enabled = false,
-        dmg = INIT_BULLET_DMG,
-        fireRate = INIT_BULLET_FIRE_RATE,
-    }: BlasterAttrs) {
+    constructor(
+        private owner: ProjectileOwner,
+        private enabled = false,
+        private dmg = INIT_BULLET_DMG,
+        private fireRate = INIT_BULLET_FIRE_RATE,
+    ) {
         this.owner = owner
         this.enabled = enabled
         this.dmg = dmg

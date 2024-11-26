@@ -39,9 +39,7 @@ export class PlasmaOrbs implements Skill {
     unloadPhysics = () => {}
     unloadRender = () => {}
 
-    owner: OrbsOwner
-
-    constructor(owner: OrbsOwner) {
+    constructor(private owner: OrbsOwner) {
         this.owner = owner
     }
 

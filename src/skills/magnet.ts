@@ -2,26 +2,27 @@ import { Assets } from "src/asset"
 import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
 
-const INC_PICKUP_RADIUS = 10
-const MAX_PICKUP_RADIUS = 60
-
 export interface MagnetOwner {
     pickupRadius: number
 }
 
 export class Magnet implements Skill {
-    owner: MagnetOwner
-
-    constructor(owner: MagnetOwner) {
+    constructor(
+        private owner: MagnetOwner,
+        private incRadius = 10,
+        private maxRadius = 60,
+    ) {
         this.owner = owner
+        this.incRadius = incRadius
+        this.maxRadius = maxRadius
     }
 
     getUpgrades(): Upgrade[] {
         const sprite = "eMagnet" as keyof Assets
         const upgrades = []
 
-        if (this.owner.pickupRadius < MAX_PICKUP_RADIUS) {
-            const apply = () => (this.owner.pickupRadius += INC_PICKUP_RADIUS)
+        if (this.owner.pickupRadius < this.maxRadius) {
+            const apply = () => (this.owner.pickupRadius += this.incRadius)
             upgrades.push({ label: "++PICKUP DIST", sprite, apply })
         }
 

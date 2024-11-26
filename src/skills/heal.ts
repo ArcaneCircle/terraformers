@@ -4,24 +4,24 @@ import { Skill } from "./skill"
 
 import { clamp } from "../core/math"
 
-const HEAL_AMT = 10
-
 interface HealOwner {
     health: number
     maxHealth: number
 }
 
 export class Heal implements Skill {
-    owner: HealOwner
-
-    constructor(owner: HealOwner) {
+    constructor(
+        private owner: HealOwner,
+        private healAmount: number = 10,
+    ) {
         this.owner = owner
+        this.healAmount = healAmount
     }
 
     getUpgrades(): Upgrade[] {
         const sprite = "eHeart" as keyof Assets
         const apply = () => {
-            const hp = ~~((this.owner.maxHealth * HEAL_AMT) / 100)
+            const hp = ~~((this.owner.maxHealth * this.healAmount) / 100)
             this.owner.health = clamp(
                 this.owner.health + hp,
                 0,

@@ -2,26 +2,27 @@ import { Assets } from "src/asset"
 import { Upgrade } from "src/upgrade"
 import { Skill } from "./skill"
 
-const INC_OWNER_SPEED = 0.01
-const MAX_OWNER_SPEED = 0.08
-
 interface SpeedOwner {
     speed: number
 }
 
 export class MovementSpeed implements Skill {
-    owner: SpeedOwner
-
-    constructor(owner: SpeedOwner) {
+    constructor(
+        private owner: SpeedOwner,
+        private incSpeed = 0.01,
+        private maxSpeed = 0.08,
+    ) {
         this.owner = owner
+        this.incSpeed = incSpeed
+        this.maxSpeed = maxSpeed
     }
 
     getUpgrades(): Upgrade[] {
         const sprite = "eShoes" as keyof Assets
         const upgrades = []
 
-        if (this.owner.speed < MAX_OWNER_SPEED) {
-            const apply = () => (this.owner.speed += INC_OWNER_SPEED)
+        if (this.owner.speed < this.maxSpeed) {
+            const apply = () => (this.owner.speed += this.incSpeed)
             upgrades.push({ label: "MOVE FASTER", sprite, apply })
         }
 
