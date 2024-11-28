@@ -118,8 +118,8 @@ export class PlasmaField implements Skill {
                 ctx.fillStyle = LGREEN + "33"
                 ctx.beginPath()
                 ctx.arc(
-                    this.owner.x + 4 - cam.x,
-                    this.owner.y + 4 - cam.y,
+                    this.owner.x - cam.x,
+                    this.owner.y - cam.y,
                     this.radius,
                     0,
                     Math.PI * 2,

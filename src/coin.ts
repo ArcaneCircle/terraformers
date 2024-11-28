@@ -1,7 +1,7 @@
 import { cam } from "./cam"
 import { addPhysicsComp } from "./components/physics"
 import { addRenderComp } from "./components/render"
-import { COIN_PICKUP_SPEED, COIN_XP } from "./const"
+import { COIN_PICKUP_SPEED, COIN_XP, DEBUG, BLACK0 } from "./const"
 import { distance, limitMagnitude } from "./core/math"
 import { playPickup } from "./sound"
 import { stats } from "./stat"
@@ -76,15 +76,17 @@ export const loadCoin = () => {
                 ~~(x - center - cam.x),
                 ~~(y - center - cam.y),
             )
-            //if (DEBUG) {
-            //    ctx.strokeStyle = BLACK0
-            //    ctx.strokeRect(
-            //        x - center - cam.x,
-            //        y - center - cam.y,
-            //        SIZE,
-            //        SIZE,
-            //    )
-            //}
+            /*
+            if (DEBUG) {
+                ctx.strokeStyle = BLACK0
+                ctx.strokeRect(
+                    x - center - cam.x,
+                    y - center - cam.y,
+                    SIZE,
+                    SIZE,
+                )
+            }
+            */
         })
     })
 }

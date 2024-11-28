@@ -31,6 +31,9 @@ import {
     SPAWN_RADIUS,
     SPRITE_ANIM_RATE_MS,
     WHITE,
+    DEBUG,
+    RED,
+    BLACK0,
 } from "./const"
 import { ticker } from "./core/interpolation"
 import { aabb, angleToVec, distance, limitMagnitude, rand } from "./core/math"
@@ -547,30 +550,34 @@ export const loadMob = () => {
                 }
 
                 ctx.drawImage(frame, ~~(x - cam.x), ~~(y - cam.y))
+                /*
                 // draw collision rect
-                //if (DEBUG) {
-                //    ctx.strokeStyle = BLACK0
-                //    ctx.strokeRect(x - cam.x, y - cam.y, MOB_SIZE, MOB_SIZE)
-                //    ctx.strokeStyle = RED
-                //    ctx.strokeRect(x - cam.x, y - cam.y, 1, 1)
-                //}
+                if (DEBUG) {
+                    ctx.strokeStyle = BLACK0
+                    ctx.strokeRect(x - cam.x, y - cam.y, MOB_SIZE, MOB_SIZE)
+                    ctx.strokeStyle = RED
+                    ctx.strokeRect(x - cam.x, y - cam.y, 1, 1)
+                }
+                */
                 return false
             },
         )
 
+        /*
         // draw spawn circle
-        //if (DEBUG) {
-        //    ctx.strokeStyle = BLACK0
-        //    ctx.beginPath()
-        //    ctx.arc(
-        //        stats.hero.x - cam.x,
-        //        stats.hero.y - cam.y,
-        //        SPAWN_RADIUS,
-        //        0,
-        //        Math.PI * 2,
-        //    )
-        //    ctx.stroke()
-        //}
+        if (DEBUG) {
+            ctx.strokeStyle = BLACK0
+            ctx.beginPath()
+            ctx.arc(
+                stats.hero.x - cam.x,
+                stats.hero.y - cam.y,
+                SPAWN_RADIUS,
+                0,
+                Math.PI * 2,
+            )
+            ctx.stroke()
+        }
+        */
     })
 }
 
@@ -612,7 +619,7 @@ export const attackMob = (id: number, dmg: number) => {
     if (E.health[id] <= 0) {
         E.active[id] = false
         freePool.push(id)
-        dropCoin(E.x[id], E.y[id])
+        dropCoin(E.x[id] + MOB_SIZE, E.y[id] + MOB_SIZE)
         stats.score += 1
     } else {
         E.dmgTicker[id] = DMG_BLINK_ANIM_TIME

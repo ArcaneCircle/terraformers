@@ -194,8 +194,8 @@ export abstract class Hero {
             if (this.state !== State.dead) {
                 ctx.drawImage(
                     frame,
-                    ~~(this.x - center - cam.x),
-                    ~~(this.y - center - cam.y),
+                    ~~(this.x - SIZE - cam.x),
+                    ~~(this.y - SIZE - cam.y),
                 )
             } else {
                 const time = this.deathAnim.ticks
@@ -203,22 +203,22 @@ export abstract class Hero {
                 if (time < 1e3) {
                     ctx.drawImage(
                         frame,
-                        ~~(this.x - center - cam.x),
-                        ~~(this.y - center - cam.y),
+                        ~~(this.x - SIZE - cam.x),
+                        ~~(this.y - SIZE - cam.y),
                     )
                     // death anim
                 } else if (time < 3e3) {
                     ctx.drawImage(
                         frame,
-                        ~~(this.x - center - cam.x),
-                        ~~(this.y - center - cam.y),
+                        ~~(this.x - SIZE - cam.x),
+                        ~~(this.y - SIZE - cam.y),
                     )
                     const lerp = this.ms200.ticks / 200
                     ctx.strokeStyle = WHITE
                     ctx.beginPath()
                     ctx.arc(
-                        this.x + 4 - cam.x,
-                        this.y + 4 - cam.y,
+                        this.x - cam.x,
+                        this.y - cam.y,
                         lerp * 20,
                         0,
                         Math.PI * 2,
@@ -235,6 +235,7 @@ export abstract class Hero {
                 }
             }
 
+            /*
             if (DEBUG) {
                 // center
                 ctx.strokeStyle = RED
@@ -265,6 +266,7 @@ export abstract class Hero {
                 )
                 ctx.stroke()
             }
+            */
         })
     }
 

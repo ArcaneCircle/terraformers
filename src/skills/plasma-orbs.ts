@@ -77,10 +77,8 @@ export class PlasmaOrbs implements Skill {
             for (let i = 0; i < this.count; i++) {
                 const angle =
                     (i / this.count) * 2 * Math.PI - stats.time * ORB_SPIN_SPEED
-                this.orbs.x[i] =
-                    this.owner.x + 4 + Math.sin(angle) * this.radius
-                this.orbs.y[i] =
-                    this.owner.y + 4 + Math.cos(angle) * this.radius
+                this.orbs.x[i] = this.owner.x + Math.sin(angle) * this.radius
+                this.orbs.y[i] = this.owner.y + Math.cos(angle) * this.radius
                 this.orbs.charge[i] += dt
                 if (this.orbs.charge[i] >= ORB_CHARGE_TIME) {
                     this.orbs.charge[i] = 0
