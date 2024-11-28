@@ -8,7 +8,7 @@ import { addPhysicsComp } from "../components/physics"
 import { addRenderComp } from "../components/render"
 import { distance, rand, randInt } from "../core/math"
 import { ticker } from "../core/interpolation"
-import { attackMob, iterMobs, MOB_SIZE } from "../mob"
+import { attackMob, iterMobs, MOB_COLLISION_BOX_SIZE } from "../mob"
 
 const INIT_AURA_RADIUS = 30
 const INC_AURA_RADIUS = 5
@@ -113,8 +113,8 @@ export class PlasmaField implements Skill {
                         distance(
                             this.owner.x,
                             this.owner.y,
-                            mobx + MOB_SIZE / 2,
-                            moby + MOB_SIZE / 2,
+                            mobx + MOB_COLLISION_BOX_SIZE / 2,
+                            moby + MOB_COLLISION_BOX_SIZE / 2,
                         ) < this.radius
                     ) {
                         attackMob(mobid, this.dmg)

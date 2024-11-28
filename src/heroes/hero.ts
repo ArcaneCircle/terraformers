@@ -32,8 +32,8 @@ const INIT_LIGHT_RADIUS = 50
 const INIT_LEVEL_XP = 50
 const LEVEL_XP_CAP_INC = 70
 
-const SIZE = 8
-const center = SIZE / 2
+const COLLISION_BOX_SIZE = 8
+const COLLISION_RADIUS = COLLISION_BOX_SIZE / 2
 
 export const enum State {
     idle,
@@ -114,7 +114,16 @@ export abstract class Hero {
     }
 
     isHittingHero(x: number, y: number, w: number, h: number) {
-        return aabb(this.x, this.y, SIZE, SIZE, x, y, w, h)
+        return aabb(
+            this.x - COLLISION_RADIUS,
+            this.y - COLLISION_RADIUS,
+            COLLISION_BOX_SIZE,
+            COLLISION_BOX_SIZE,
+            x,
+            y,
+            w,
+            h,
+        )
     }
 
     isNearHero(x: number, y: number, w: number, h: number) {
@@ -194,8 +203,8 @@ export abstract class Hero {
             if (this.state !== State.dead) {
                 ctx.drawImage(
                     frame,
-                    ~~(this.x - SIZE - cam.x),
-                    ~~(this.y - SIZE - cam.y),
+                    ~~(this.x - COLLISION_BOX_SIZE - cam.x),
+                    ~~(this.y - COLLISION_BOX_SIZE - cam.y),
                 )
             } else {
                 const time = this.deathAnim.ticks
@@ -203,15 +212,15 @@ export abstract class Hero {
                 if (time < 1e3) {
                     ctx.drawImage(
                         frame,
-                        ~~(this.x - SIZE - cam.x),
-                        ~~(this.y - SIZE - cam.y),
+                        ~~(this.x - COLLISION_BOX_SIZE - cam.x),
+                        ~~(this.y - COLLISION_BOX_SIZE - cam.y),
                     )
                     // death anim
                 } else if (time < 3e3) {
                     ctx.drawImage(
                         frame,
-                        ~~(this.x - SIZE - cam.x),
-                        ~~(this.y - SIZE - cam.y),
+                        ~~(this.x - COLLISION_BOX_SIZE - cam.x),
+                        ~~(this.y - COLLISION_BOX_SIZE - cam.y),
                     )
                     const lerp = this.ms200.ticks / 200
                     ctx.strokeStyle = WHITE
@@ -243,10 +252,10 @@ export abstract class Hero {
                 // collision radius
                 ctx.strokeStyle = BLACK0
                 ctx.strokeRect(
-                    this.x - center - cam.x,
-                    this.y - center - cam.y,
-                    SIZE,
-                    SIZE,
+                    this.x - COLLISION_RADIUS - cam.x,
+                    this.y - COLLISION_RADIUS - cam.y,
+                    COLLISION_BOX_SIZE,
+                    COLLISION_BOX_SIZE,
                 )
                 // rect used for checking hero proximity(for collisions)
                 ctx.strokeRect(

@@ -74,9 +74,9 @@ let freePool: number[] = []
 let wavesEnded = false
 let playHitSound = false
 
-export const MOB_SIZE = 8
+export const MOB_COLLISION_BOX_SIZE = 8
 const DMG_BLINK_ANIM_TIME = 200
-const center = MOB_SIZE / 2
+const COLLISION_RADIUS = MOB_COLLISION_BOX_SIZE / 2
 
 const tenSec = ticker(10000)
 const fiveSec = ticker(5000)
@@ -418,10 +418,10 @@ export const loadMob = () => {
             (x, y, id, _flip, _near, _frame, _framet, type, _dmgTicker) => {
                 // check proximity to hero
                 E.near[id] = stats.hero.isNearHero(
-                    x + center,
-                    y + center,
-                    MOB_SIZE,
-                    MOB_SIZE,
+                    x - COLLISION_RADIUS,
+                    y - COLLISION_RADIUS,
+                    MOB_COLLISION_BOX_SIZE,
+                    MOB_COLLISION_BOX_SIZE,
                 )
 
                 // check hero collision
@@ -429,10 +429,10 @@ export const loadMob = () => {
                 if (
                     E.near[id] &&
                     stats.hero.isHittingHero(
-                        x + center,
-                        y + center,
-                        MOB_SIZE,
-                        MOB_SIZE,
+                        x - COLLISION_RADIUS,
+                        y - COLLISION_RADIUS,
+                        MOB_COLLISION_BOX_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
                     )
                 ) {
                     stats.hero.hitHero(attacks[type])
@@ -479,20 +479,20 @@ export const loadMob = () => {
                     aabb(
                         E.x[i],
                         E.y[i],
-                        MOB_SIZE,
-                        MOB_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
                         E.x[j],
                         E.y[j],
-                        MOB_SIZE,
-                        MOB_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
                     )
                 ) {
                     const xOffset = Math.max(
-                        E.x[i] + MOB_SIZE - E.x[j],
+                        E.x[i] + MOB_COLLISION_BOX_SIZE - E.x[j],
                         MOB_MAX_COLLISION_SNAP_DIST,
                     )
                     const yOffset = Math.max(
-                        E.y[i] + MOB_SIZE - E.y[j],
+                        E.y[i] + MOB_COLLISION_BOX_SIZE - E.y[j],
                         MOB_MAX_COLLISION_SNAP_DIST,
                     )
                     if (xOffset > yOffset) {
@@ -549,12 +549,21 @@ export const loadMob = () => {
                     return false
                 }
 
-                ctx.drawImage(frame, ~~(x - cam.x), ~~(y - cam.y))
+                ctx.drawImage(
+                    frame,
+                    ~~(x - MOB_COLLISION_BOX_SIZE - cam.x),
+                    ~~(y - MOB_COLLISION_BOX_SIZE - cam.y),
+                )
                 /*
                 // draw collision rect
                 if (DEBUG) {
                     ctx.strokeStyle = BLACK0
-                    ctx.strokeRect(x - cam.x, y - cam.y, MOB_SIZE, MOB_SIZE)
+                    ctx.strokeRect(
+                        x - COLLISION_RADIUS - cam.x,
+                        y - COLLISION_RADIUS - cam.y,
+                        MOB_COLLISION_BOX_SIZE,
+                        MOB_COLLISION_BOX_SIZE,
+                    )
                     ctx.strokeStyle = RED
                     ctx.strokeRect(x - cam.x, y - cam.y, 1, 1)
                 }
@@ -619,7 +628,10 @@ export const attackMob = (id: number, dmg: number) => {
     if (E.health[id] <= 0) {
         E.active[id] = false
         freePool.push(id)
-        dropCoin(E.x[id] + MOB_SIZE, E.y[id] + MOB_SIZE)
+        dropCoin(
+            E.x[id] + MOB_COLLISION_BOX_SIZE,
+            E.y[id] + MOB_COLLISION_BOX_SIZE,
+        )
         stats.score += 1
     } else {
         E.dmgTicker[id] = DMG_BLINK_ANIM_TIME
@@ -671,10 +683,10 @@ export const isHittingMob = (
         y,
         w,
         h,
-        E.x[id] + center,
-        E.y[id] + center,
-        MOB_SIZE,
-        MOB_SIZE,
+        E.x[id] + COLLISION_RADIUS,
+        E.y[id] + COLLISION_RADIUS,
+        MOB_COLLISION_BOX_SIZE,
+        MOB_COLLISION_BOX_SIZE,
     )
 }
 
