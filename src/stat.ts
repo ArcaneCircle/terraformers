@@ -30,7 +30,7 @@ class Stats {
     load() {
         this.unloadPhysics = addPhysicsComp((dt) => {
             this.time += dt / 1e3
-            this.hour = ((this.time / 60 + 2.5) % 5) * 4.8
+            this.hour = ((this.time / 60 + 1.46) % 5) * 4.8
 
             let radius = 90 // day
             let transparency = 0x44 // day
