@@ -68,7 +68,7 @@ export class Blaster implements Skill {
                 }
                 this.enabled = true
             }
-            const label = this.enabled ? "SHOOT FASTER" : "LASER GUN"
+            const label = this.enabled ? "SHOOT FASTER" : "BLASTER"
             upgrades.push({ label, sprite, apply })
         }
 

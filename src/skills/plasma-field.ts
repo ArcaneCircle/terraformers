@@ -52,13 +52,7 @@ export class PlasmaField implements Skill {
         const upgrades = []
 
         if (this.radius < MAX_AURA_RADIUS) {
-            const apply = () => {
-                if (this.radius === 0) {
-                    this.radius = INIT_AURA_RADIUS
-                } else {
-                    this.radius += INC_AURA_RADIUS
-                }
-            }
+            const apply = () => this.upgradeRadius()
             const label = this.radius > 0 ? "++PLASMA SIZE" : "PLASMA FIELD"
             upgrades.push({ label, sprite, apply })
         }
@@ -66,20 +60,36 @@ export class PlasmaField implements Skill {
         if (this.radius <= 0) return upgrades
 
         if (this.dmg < MAX_AURA_DAMAGE) {
-            const apply = () => {
-                this.dmg += INC_AURA_DAMAGE
-            }
+            const apply = () => this.upgradeDmg()
             upgrades.push({ label: "++PLASMA DMG", sprite, apply })
         }
         if (this.dmgRate > MIN_AURA_DAMAGE_RATE) {
-            const apply = () => {
-                this.dmgRate -= DEC_AURA_DAMAGE_RATE
-                this.dmgRateTicker.interval(this.dmgRate)
-            }
+            const apply = () => this.upgradeDmgRate()
             upgrades.push({ label: "++PLASMA PWR", sprite, apply })
         }
 
         return upgrades
+    }
+
+    upgradeRadius() {
+        if (this.radius === 0) {
+            this.radius = INIT_AURA_RADIUS
+        } else if (this.radius < MAX_AURA_RADIUS) {
+            this.radius += INC_AURA_RADIUS
+        }
+    }
+
+    upgradeDmg() {
+        if (this.dmg < MAX_AURA_DAMAGE) {
+            this.dmg += INC_AURA_DAMAGE
+        }
+    }
+
+    upgradeDmgRate() {
+        if (this.dmgRate > MIN_AURA_DAMAGE_RATE) {
+            this.dmgRate -= DEC_AURA_DAMAGE_RATE
+            this.dmgRateTicker.interval(this.dmgRate)
+        }
     }
 
     load() {

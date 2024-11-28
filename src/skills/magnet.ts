@@ -22,11 +22,15 @@ export class Magnet implements Skill {
         const upgrades = []
 
         if (this.owner.pickupRadius < this.maxRadius) {
-            const apply = () => (this.owner.pickupRadius += this.incRadius)
+            const apply = () => this.upgrade()
             upgrades.push({ label: "++PICKUP DIST", sprite, apply })
         }
 
         return upgrades
+    }
+
+    upgrade() {
+        this.owner.pickupRadius += this.incRadius
     }
 
     load() {}
