@@ -80,7 +80,6 @@ export const powerupMenu = () => {
 }
 
 export const prepareDeathScene = () => {
-    unloadHud()
     stats.unload()
     stats.hero.unloadSkills()
     unloadCam()
