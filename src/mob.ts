@@ -628,10 +628,7 @@ export const attackMob = (id: number, dmg: number) => {
     if (E.health[id] <= 0) {
         E.active[id] = false
         freePool.push(id)
-        dropCoin(
-            E.x[id] + MOB_COLLISION_BOX_SIZE,
-            E.y[id] + MOB_COLLISION_BOX_SIZE,
-        )
+        dropCoin(E.x[id], E.y[id])
         stats.score += 1
     } else {
         E.dmgTicker[id] = DMG_BLINK_ANIM_TIME
