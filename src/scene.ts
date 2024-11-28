@@ -79,7 +79,7 @@ export const powerupMenu = () => {
     obsEmit(Observable.scene, scene)
 }
 
-export const prerpareDeathScene = () => {
+export const prepareDeathScene = () => {
     unloadHud()
     stats.unload()
     stats.hero.unloadSkills()

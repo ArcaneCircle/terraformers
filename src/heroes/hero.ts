@@ -17,7 +17,7 @@ import {
     DEBUG,
 } from "../const"
 import { aabb } from "../core/math"
-import { endGame, prerpareDeathScene } from "../scene"
+import { endGame, prepareDeathScene } from "../scene"
 import { playHit, playHurt } from "../sound"
 import { stats } from "../stat"
 import { ticker } from "../core/interpolation"
@@ -176,7 +176,7 @@ export abstract class Hero {
                 this.health -= 1
                 this.pendingDamage -= 1
                 if (this.health <= 0) {
-                    prerpareDeathScene()
+                    prepareDeathScene()
                     this.state = State.dead
                 }
             }
