@@ -28,6 +28,7 @@ let hoveredUpgrade: UpgradeId = 0
 const upgrades: Upgrade[] = []
 const selectUpgrade = (id: UpgradeId) => () => {
     upgrades[id].apply()
+    stats.hero.makeInvulnerable()
     resumeGame()
 }
 

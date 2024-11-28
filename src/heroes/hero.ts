@@ -96,11 +96,15 @@ export abstract class Hero {
         return false
     }
 
+    makeInvulnerable() {
+        this.invulnerable = true
+        this.vulnerability.reset()
+    }
+
     hitHero(amt: number) {
         if (!this.invulnerable) {
             this.pendingDamage += amt
-            this.invulnerable = true
-            this.vulnerability.reset()
+            this.makeInvulnerable()
             playHurt()
         }
     }
